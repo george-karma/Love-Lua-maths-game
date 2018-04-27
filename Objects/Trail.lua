@@ -1,8 +1,8 @@
-local Trail = PlayerObject:extend()
+local Trail = Class:extend()
 
 --the new function is its constructor
 function Trail:new(type,x,y,opts)
-	Trail.super.new(self)
+	
 	self.type = type
 	self.dead = false
 	self.x,self.y=x,y 
