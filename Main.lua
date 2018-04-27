@@ -133,53 +133,51 @@ end
 
 
 
-
---instead of just drawing the game objects directly to the screen, 
---we set mainCanvas with love.graphics.setCanvas, 
---clear the contents from this canvas from the last frame with love.graphics.clear,
--- draw the game objects, 
---and then draw the canvas scale up by 3 (love.graphics.draw). 
+--[[
+	instead of just drawing the game objects directly to the screen, 
+	we set mainCanvas with love.graphics.setCanvas, 
+	clear the contents from this canvas from the last frame with love.graphics.clear,
+	draw the game objects, 
+	and then draw the canvas scale up by 3 (love.graphics.draw). 
+--]]
 function love.draw()
-	--We draw sepret objects on sepret canvases as to not have interlap and to be able 
-	--to manipulate each canvas individually
+	--We draw objects on seperate canvases as to not have interlap and to be able to manipulate each canvas individually 
+
+	--setting up the trail canvas
+	love.graphics.setCanvas(trailCanvas)
+		love.graphics.clear()
+		for i,localGameObject in ipairs(localGameObjectArray) do
+			if localGameObject.type == "Trail" then
+				localGameObject:draw()
+
+			end
+		end
+		angleTrails(160,120,PlayerObject.angle)
+		love.graphics.setBlendMode("subtract")
+			for i = 0, 360, 2 do
+				love.graphics.line(i,0,i,240)
+			end
+		love.graphics.setBlendMode("alpha")
+	love.graphics.setCanvas()
 
 
-
-
-
+	--setting up the game object canvas
 	love.graphics.setCanvas(localGameObjectCanvas)
-	love.graphics.clear()
-	for i, localGameObject in ipairs(localGameObjectArray) do
-		if localGameObject.type == "PlayerObject" then
+		love.graphics.clear()
+		for i, localGameObject in ipairs(localGameObjectArray) do
+			if localGameObject.type == "PlayerObject" then
 	       	localGameObject:draw()
 	       	
+			end
 		end
-	end
 	love.graphics.setCanvas()
-
-
-
-
-	love.graphics.setCanvas(trailCanvas)
-	love.graphics.clear()
-	for i,localGameObject in ipairs(localGameObjectArray) do
-		if localGameObject.type == "Trail" then
-			localGameObject:draw()
-			
-		end
-	end
-
-	
-	love.graphics.setCanvas()
-
-
 
 
 
 	love.graphics.setCanvas(mainCanvas)
-	love.graphics.clear()
-	love.graphics.draw(trailCanvas,0,0)
-	love.graphics.draw(localGameObjectCanvas,0,0)
+		love.graphics.clear()
+		love.graphics.draw(trailCanvas,0,0)
+		love.graphics.draw(localGameObjectCanvas,0,0)
 	love.graphics.setCanvas()
 
 	--we scale the canvas three times
@@ -218,7 +216,6 @@ function requireFiles(files)
 		--#parts is the size of parts for lists
 		--_G is all global variables defined in the scope
 		_G[class] = require(file)
-		
 	
 	end
 end
@@ -229,4 +226,12 @@ function createGameObject(type,x,y,opts)
 	table.insert(localGameObjectArray, localGameObject)
 	return localGameObject--we just return it just in case
 	-- body
+end
+
+function angleTrails(xLocation,yLocation,rotation)
+	love.graphics.push()
+	love.graphics.translate(xLocation,yLocation)
+	love.graphics.rotate(rotation or 0)
+	love.graphics.translate(-xLocation, -yLocation)
+	love.graphics.pop()
 end
