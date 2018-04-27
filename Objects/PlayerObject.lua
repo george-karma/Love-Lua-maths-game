@@ -11,7 +11,7 @@ function PlayerObject:new(type,x,y,opts)
 	local opts = opts or {} --in case optional arg is nul
 	for k,v in pairs(opts) do self[k] = v end
 	self.dead = false
-	--self.angle = math.atan2(self.y - self.previousy, self.x - self.previousx)*180/math.pi
+	
 
 	--timer:every(0.01,function() createGameObject("Trail",self.x,self.y,{r=17})end)
 
@@ -23,12 +23,11 @@ function PlayerObject:update(dt)
 
 	self.x, self.y = x/3, y/3
 
-	createGameObject("Trail",self.x,self.y,{r=17})
+	self.angle = math.atan2(self.y - self.previousy, self.x - self.previousx)
+	--print (angle)
+	createGameObject("Trail",self.x,self.y,{r=18;angle=self.angle})
 
-	--self.angle = math.atan2(self.y - self.previousy, self.x - self.previousx)*180/math.pi
-	
-
-	--self.previousx, previousy = x, y
+	self.previousx, previousy = x, y
 	
 end
 

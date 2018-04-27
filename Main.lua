@@ -100,7 +100,7 @@ function love.load()
  	localGameObjectCanvas = love.graphics.newCanvas(320, 240)
  	--setting upscailing filters, nearest will make it look pixelated like photshop
  	localGameObjectCanvas:setFilter("nearest","nearest")
- 	trailCanvas = love.graphics.newCanvas(320,240)
+ 	trailCanvas = love.graphics.newCanvas(1280,480)
  	trailCanvas:setFilter("nearest","nearest")
  	
 	love.window.setMode(960,720)
@@ -151,13 +151,7 @@ function love.draw()
 				localGameObject:draw()
 
 			end
-		end
-		angleTrails(160,120,PlayerObject.angle)
-		love.graphics.setBlendMode("subtract")
-			for i = 0, 360, 2 do
-				love.graphics.line(i,0,i,240)
-			end
-		love.graphics.setBlendMode("alpha")
+		end	
 	love.graphics.setCanvas()
 
 
@@ -223,15 +217,9 @@ end
 
 function createGameObject(type,x,y,opts)
 	local localGameObject = _G[type](type,x,y,opts)
+	--localGameObject:new(type,x,y,opts)
 	table.insert(localGameObjectArray, localGameObject)
 	return localGameObject--we just return it just in case
 	-- body
 end
 
-function angleTrails(xLocation,yLocation,rotation)
-	love.graphics.push()
-	love.graphics.translate(xLocation,yLocation)
-	love.graphics.rotate(rotation or 0)
-	love.graphics.translate(-xLocation, -yLocation)
-	love.graphics.pop()
-end
