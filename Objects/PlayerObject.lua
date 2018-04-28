@@ -13,7 +13,7 @@ function PlayerObject:new(type,x,y,opts)
 	self.dead = false
 	
 
-	--timer:every(0.01,function() createGameObject("Trail",self.x,self.y,{r=17})end)
+	timer:every(0.01,function() createGameObject("Trail",self.x,self.y,{r=17,angle = self.angle})end)
 
 end
 
@@ -23,9 +23,9 @@ function PlayerObject:update(dt)
 
 	self.x, self.y = x/3, y/3
 
-	self.angle = math.atan2(self.y - self.previousy, self.x - self.previousx)
+	self.angle = math.atan2(self.y - self.previousy, self.x - self.previousx) * 180/math.pi
 	--print (angle)
-	createGameObject("Trail",self.x,self.y,{r=18;angle=self.angle})
+	--createGameObject("Trail",self.x,self.y,{r=18;angle=self.angle})
 
 	self.previousx, previousy = x, y
 	

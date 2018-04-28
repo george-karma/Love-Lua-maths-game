@@ -11,8 +11,8 @@ function Trail:new(type,x,y,opts)
 	randomRadius = math.random(-2.5,3)
 	for k,v in pairs(opts) do self[k] = v end
 	angle = self.angle or 90
-	timer:tween(0.3 , self, {r = 0},"linear")
-	timer:every(0.3,function() self.dead = true end)
+	timer:tween(0.2 , self, {r = 0},"linear")
+	timer:every(0.2,function() self.dead = true end)
 
 end
 
@@ -24,16 +24,16 @@ end
 
 function Trail:draw()
 
-	love.graphics.setColor(0, 100, 255)
-	Trail:angleTrails(160,120,angle+math.pi/2)
-	--print(angle)
+	love.graphics.setColor(255, 0, 120)
+	--Trail:angleTrails(160,120,angle)
+	love.graphics.circle("fill", self.x, self.y, self.r + randomRadius)
 		love.graphics.setBlendMode("subtract")
 			for i = 0, 360, 3 do
 				love.graphics.line(i,-240,i,480)
 			end
 		love.graphics.setBlendMode("alpha")
-		love.graphics.pop()
-	love.graphics.circle("fill", self.x, self.y, self.r + randomRadius)
+		--love.graphics.pop()
+	--love.graphics.circle("fill", self.x, self.y, self.r + randomRadius)
 	love.graphics.setColor(255, 255, 255)
 end
 
