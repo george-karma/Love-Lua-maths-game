@@ -5,9 +5,11 @@ function HyperCircle:new(x,y,r,outerRadius,opts)
 	self.r = r
 	self.outerRadius = outerRadius
 	self.creationTims = love.timer.getTime()
-	for k,v in pairs(opts) do self[k] = v end
+	if opts ~= nil then
+		for k,v in pairs(opts) do self[k] = v end
+	end
 
-	timer:tween(0.5,self,{lineWidth = 10})
+	timer:after(2,function()timer:tween(0.5,self,{lineWidth = 10})end)
 	
 
 end

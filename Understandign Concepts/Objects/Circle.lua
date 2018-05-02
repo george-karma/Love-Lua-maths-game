@@ -2,7 +2,9 @@ local Circle = Class:extend()
 function Circle:new(x,y,opts)
 	self.x, self.y = x, y
 	self.creationTime = love.timer.getTime()
-	for k,v in pairs(opts) do self[k] = v end
+	if opts ~= nil then
+		for k,v in pairs(opts) do self[k] = v end
+	end
 	
 end
 function Circle:update(dt)
@@ -11,7 +13,7 @@ end
 
 function Circle:draw()
 
-	love.graphics.circle("fill", self.x,self.y,self.r)
+	love.graphics.circle("fill", self.x,self.y,self.r or 50)
 --[[
 	love.graphics.setColor(0,0,255)
 	love.graphics.print(tostring(self.creationTime),self.x,self.y)
