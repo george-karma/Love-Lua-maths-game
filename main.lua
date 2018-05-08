@@ -1,5 +1,8 @@
 --[[TODO:
  	Add all licences in the 'licences' folder.
+ 	Integrate Player Design with main branch.
+ 	Create an object that randomly generates math problems.
+ 	Add physics and collision.
 --]]
 --Code for debbuging in realtime 
 io.stdout:setvbuf("no")
@@ -9,7 +12,8 @@ io.stdout:setvbuf("no")
 	Input = require 'Libraries/boipushy-master/Input'
 	Timer = require 'Libraries/hump-master/hump-master/timer'
 	Utilities = require 'Libraries/utilities'
-	Physics = require "Libraries/windfield/init"
+	Physics = require "Libraries/windfield"
+	Camera = require "Libraries/STALKER-X-master/camera"
 --Libraries
 
 function love.load()
@@ -25,6 +29,11 @@ function love.load()
 	requireFiles(objectFiles)
 	timer = Timer()
 	input = Input()
+	camera = Camera()
+	--We need lerping and a follow style otherwise the shake won't work.
+	camera:setFollowLerp(0.2)
+	camera:setFollowStyle("LOCKON")
+	--physics = Physics()
 --Getting all objects and libraries
 
 --Defining Inputs
@@ -34,7 +43,6 @@ function love.load()
 --Room System
 	currentRoom = nil 
 	goToRoom("Stage")
-
 --Room System
 	
 
@@ -43,8 +51,13 @@ end
 
 function love.update(dt)
 	timer:update(dt)
+	camera:update(dt)
+	world:update(dt)
 	if currentRoom then currentRoom:update(dt) end
 
+	if input:pressed("testkey") then 
+		camera:shake(3,0.5,60) 
+	end
 
 --[[ INPUT EXAMPLES
 	if input:pressed('test') then print('pressed') end
@@ -67,11 +80,6 @@ end
 function  goToRoom(roomType)
 	currentRoom = _G[roomType]()
 end
-
-
-
-
-
 
 
 
