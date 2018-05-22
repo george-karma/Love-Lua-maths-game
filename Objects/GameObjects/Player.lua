@@ -19,17 +19,21 @@ function Player:new(area,x,y,opts)
 	self.rotationVelocity = 1.66*math.pi
 	self.currentVelocity = 0
 	self.maxVelocity = 40
-	self.acceleration = 100
+	self.acceleration = 0
 --MOVEMENT VARIABLES
+
 
 end
 
 function Player:update(dt)
 	Player.super.update(self,dt)
 
-	local xMouse,yMouse = love.mouse.getPostion()
-	self.rotation = se
+	local xMouse,yMouse =  love.mouse.get
+	self.rotation = math.atan2((yMouse - self.y), (xMouse - self.x))
+
+	print (self.rotation)
 	--[[
+
 	if input:down("left") then self.rotation = self.rotation - self.rotationVelocity*dt end
 	if input:down("right") then self.rotation = self.rotation + self.rotationVelocity*dt end
 	
@@ -38,7 +42,7 @@ function Player:update(dt)
 		if self.currentVelocity >= self.maxVelocity then
 			self.currentVelocity = self.maxVelocity
 	end
-	--]]
+	]]--
 
 	self.currentVelocity = math.min(self.currentVelocity+self.acceleration*dt, self.maxVelocity)
 	self.collider:setLinearVelocity(self.currentVelocity*math.cos(self.rotation),self.currentVelocity*math.sin(self.rotation))
@@ -49,5 +53,9 @@ end
 function Player:draw()
 		love.graphics.circle("line", self.x, self.y,self.w)
 		love.graphics.line(self.x,self.y,self.x+2*self.w*math.cos(self.rotation),self.y+2*self.w*math.sin(self.rotation))
+end
+
+function lerp(a,b,t)
+	return (1-t)*a + t*b 
 end
 return Player
