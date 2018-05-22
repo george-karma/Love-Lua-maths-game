@@ -8,7 +8,9 @@ function Stage:new(opts)
 
 	--The "self." modifier is here so we can use the Stage class across multipla gemes/apps.
 	self.area = Area(self)
+	--As I will use this system across multipme implementations, we don't want to always have a physics world atttached.
 	self.area:addPhysicsWorld()
+
 
 	scrW, scrH = 320, 240
 	if opts ~= nil then
@@ -32,8 +34,7 @@ function Stage:update(dt)
 
 	self.area:update(dt)
 	--Following the player based on its x and y.
-	camera:follow(self.player.x*3, self.player.y*3)
-	
+	--camera:follow(self.player.x*3, self.player.y*3)
 	
 	
 	
@@ -44,6 +45,7 @@ function Stage:draw()
 	love.graphics.setCanvas(self.mainCanvas)
 		love.graphics.clear()
 		self.area:draw()
+		love.graphics.circle("fill", scrW/2, scrH/2, 5)
 	love.graphics.setCanvas()
 
     camera:attach(0,0,scrW,scrH)

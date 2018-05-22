@@ -25,7 +25,7 @@ function Area:update(dt)
 end
 
 function Area:draw()
-	if self.world then self.world:draw()end
+	--if self.world then self.world:draw()end
 	--draw all the objects inside of gameObjectArray
 	for i, gameObject in ipairs(self.gameObjectArray) do gameObject:draw() end
 	

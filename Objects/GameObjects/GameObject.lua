@@ -1,15 +1,14 @@
-
-
+--Master Game Object so all other game objects can inherit this one's attributes
 local GameObject = Class:extend()
 
-function GameObject:new(areea,x,y,opts)
+function GameObject:new(area,x,y,opts)
 	self.x, self.y = x, y
 	
 	if opts ~= nil then
 		for k,v in pairs(opts) do self[k] = v end
 	end
 
-	self.areea = areea
+	self.area = area
 	self.x, self.y = x,y
 	self.id = createRandomId()
 	self.timer = Timer()
@@ -19,7 +18,10 @@ function GameObject:new(areea,x,y,opts)
 end
 
 function GameObject:update(dt)
-	
+	--only update the object if needed
+	if self.timer then self.timer:update(dt) end
+	--if the child object has a collider, then sync the x and y coorinates of the collider and the object
+	if self.collider then self.x,self.y = self.collider:getPosition() end
 end
 
 function GameObject:draw()

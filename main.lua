@@ -2,8 +2,8 @@
  	Add all licences in the 'licences' folder.
  	Integrate Player Design with main branch.
  	Create an object that randomly generates math problems.
- 	Add physics and collision.
---]]
+ 	Add collision events
+ 	Mess around with the movement variables in the player object--]]
 --Code for debbuging in realtime 
 io.stdout:setvbuf("no")
 
@@ -24,7 +24,6 @@ function love.load()
 	--getFileList("Libraries",libraryFiles)
 	--requireFiles(libraryFiles)
 
-
 	getFileList("Objects", objectFiles)
 	requireFiles(objectFiles)
 	timer = Timer()
@@ -38,21 +37,19 @@ function love.load()
 
 --Defining Inputs
 	input:bind("e","testkey")
+	input:bind("a","left")
+	input:bind("d","right")
 --Defining Inputs
 	
 --Room System
 	currentRoom = nil 
 	goToRoom("Stage")
 --Room System
-	
-
-
 end
-
 function love.update(dt)
 	timer:update(dt)
 	camera:update(dt)
-	world:update(dt)
+
 	if currentRoom then currentRoom:update(dt) end
 
 	if input:pressed("testkey") then 
@@ -74,12 +71,17 @@ end
 
 function love.draw()
 	if currentRoom then currentRoom:draw(dt) end
+	
 
 end
 
 function  goToRoom(roomType)
 	currentRoom = _G[roomType]()
 end
+
+
+
+
 
 
 
