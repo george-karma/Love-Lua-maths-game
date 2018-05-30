@@ -3,10 +3,11 @@ local Player = GameObject:extend()
 
 function Player:new(area,x,y,opts)
 	Player.super.new(self,area,x,y,opts)
-
+	--used to identify the object when deciding the draw order
+	self.type = "Player"
 	self.x, self.y = x,y
-	self.w, self.h = 12, 12
-	--Adding a new colider to the physics world inside of the areea the player is in.
+	self.w, self.h = 10, 10
+	--Adding a new colider to the physics world inside of the area the player is in.
 	self.collider = self.area.world:newCircleCollider(self.x,self.y,self.w)
 	--attaching the physics collider to the player object
 	--We can also use "getObject to "
@@ -19,31 +20,20 @@ function Player:new(area,x,y,opts)
 	self.rotationVelocity = 1.66*math.pi
 	self.currentVelocity = 0
 	self.maxVelocity = 40
-	self.acceleration = 0
+	self.acceleration = 20
 --MOVEMENT VARIABLES
-
+	timer:every(0.01,function() self.area:addGameObject("Trail",self.x,self.y,{r=17})end)
 
 end
 
 function Player:update(dt)
 	Player.super.update(self,dt)
 
-	local xMouse,yMouse =  love.mouse.get
-	self.rotation = math.atan2((yMouse - self.y), (xMouse - self.x))
-
-	print (self.rotation)
-	--[[
-
+	--change the rotation variable left or right, like old RC cars
 	if input:down("left") then self.rotation = self.rotation - self.rotationVelocity*dt end
 	if input:down("right") then self.rotation = self.rotation + self.rotationVelocity*dt end
-	
-	--We increase the velocity by the acceleration every second but we cap it at maxVelocity
-	--[[self.currentVelocity = self.currentVelocity + self.acceleration*dt
-		if self.currentVelocity >= self.maxVelocity then
-			self.currentVelocity = self.maxVelocity
-	end
-	]]--
 
+	--Always get the minmimum of the two values, so max velocity is the cap
 	self.currentVelocity = math.min(self.currentVelocity+self.acceleration*dt, self.maxVelocity)
 	self.collider:setLinearVelocity(self.currentVelocity*math.cos(self.rotation),self.currentVelocity*math.sin(self.rotation))
 

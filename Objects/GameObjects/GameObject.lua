@@ -4,6 +4,9 @@ local GameObject = Class:extend()
 function GameObject:new(area,x,y,opts)
 	self.x, self.y = x, y
 	
+	--[[The error "bad argument #1 to 'pairs' (table expected, got number)" is solved by 
+		adding the "opts" variable to the class constructor, not just to the inherited class 
+		]]-- 
 	if opts ~= nil then
 		for k,v in pairs(opts) do self[k] = v end
 	end

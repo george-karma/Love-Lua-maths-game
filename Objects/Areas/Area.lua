@@ -27,8 +27,14 @@ end
 function Area:draw()
 	--if self.world then self.world:draw()end
 	--draw all the objects inside of gameObjectArray
-	for i, gameObject in ipairs(self.gameObjectArray) do gameObject:draw() end
-	
+	for i, gameObject in ipairs(self.gameObjectArray) do
+		if gameObject.type = "Player" then
+			
+			gameObject:draw()
+		end
+		elseif gameObject.type = 
+	 gameObject:draw() end
+	.type = 
 end
 
 function Area:addGameObject(type,x,y,opts)
