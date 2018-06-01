@@ -1,13 +1,17 @@
 --[[TODO:
  	Add all licences in the 'licences' folder.
- 	Integrate Player Design with main branch.
+ 	Integrate Player Design with main branch.--Done
  	Create an object that randomly generates math problems.
  	Add collision events
- 	Mess around with the movement variables in the player object--]]
+ 	Mess around with the movement variables in the player object--Done
+	Add Gargabe colection
+ 	]]--
+
 --Code for debbuging in realtime 
 io.stdout:setvbuf("no")
 
 --Libraries
+	require "globals"
 	Class = require 'Libraries/classic-master/classic'
 	Input = require 'Libraries/boipushy-master/Input'
 	Timer = require 'Libraries/hump-master/hump-master/timer'
@@ -33,7 +37,7 @@ function love.load()
 	camera:setFollowLerp(0.2)
 	camera:setFollowStyle("LOCKON")
 	--physics = Physics()
---Getting all objects and libraries
+--Getting all objects and dlibraries
 
 --Defining Inputs
 	input:bind("e","testkey")

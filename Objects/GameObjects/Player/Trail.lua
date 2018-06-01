@@ -8,9 +8,9 @@ function Trail:new(area,x,y,opts)
 	self.area = area
 	self.dead = false
 	self.x,self.y=x,y 
-	randomRadius = math.random(-2.5,3)
+	randomRadius = math.random(-4,3)
 
-	timer:tween(0.2 , self, {r = 0},"linear")
+	timer:tween(0.2 , self, {x = 0},"linear")
 	timer:every(0.2,function() self.dead = true end)
 
 end
@@ -24,9 +24,8 @@ end
 
 
 function Trail:draw()
-    love.graphics.setColor(0, 100, 255)
-	love.graphics.circle("fill", self.x, self.y, self.r + randomRadius)
-	love.graphics.print("EVOLVE",100,100,0,100,100)
+    love.graphics.setColor(0, 255, 0)
+	love.graphics.circle("line", self.x, self.y, self.r + randomRadius)
 	--print(PlayerObject.angle)
 	love.graphics.setBlendMode("subtract")
 	for i = 0, 360, 2 do

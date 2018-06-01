@@ -6,9 +6,23 @@
 local Area = Class:extend()
 
 function Area:new(room)
+	--reference to the stage the area is in
 	self.room = room
 	self.gameObjectArray = {}
-	--print("Area")
+
+	--[[Too add a new object type to the screen we will have to create a canvas here for it
+		then add an if statement to the draw class to identify the objects from the stack
+		then draw them in the proper order]]--
+	self.mainCanvas = love.graphics.newCanvas(room.screenW, room.screenH)
+	self.mainCanvas:setFilter("nearest","nearest")
+
+	self.trailCanvas = love.graphics.newCanvas(room.screenW, room.screenH)
+	self.trailCanvas:setFilter("nearest","nearest")
+
+	self.playerCanvas = love.graphics.newCanvas(room.screenW, room.screenH)
+	self.playerCanvas:setFilter("nearest","nearest")
+
+
 end
 
 function Area:update(dt)
@@ -27,14 +41,35 @@ end
 function Area:draw()
 	--if self.world then self.world:draw()end
 	--draw all the objects inside of gameObjectArray
+
 	for i, gameObject in ipairs(self.gameObjectArray) do
-		if gameObject.type = "Player" then
-			
-			gameObject:draw()
+		if gameObject.type == "Player" then
+			love.graphics.setCanvas(self.playerCanvas)
+				love.graphics.clear()
+				gameObject:draw()
+			love.graphics.setCanvas()
+
+		elseif gameObject.type == "Trail" then
+			love.graphics.setCanvas(self.trailCanvas)
+				love.graphics.clear()
+				gameObject:draw()
+			love.graphics.setCanvas()
+
+		else
+			love.graphics.setColor(255, 0, 0)
+			love.graphics.print("ERROR: Ga",room.screenW, room.screenH)
+			love.graphiccs.setColor(255,255,255)
 		end
-		elseif gameObject.type = 
-	 gameObject:draw() end
-	.type = 
+	end
+		
+	love.graphics.setCanvas(self.mainCanvas)
+		love.graphics.clear()
+		
+		love.graphics.draw(self.trailCanvas,0,0)
+		love.graphics.draw(self.playerCanvas,0,0)
+		
+	love.graphics.setCanvas()
+	love.graphics.draw(self.mainCanvas,0,0,0,3,3)
 end
 
 function Area:addGameObject(type,x,y,opts)
@@ -49,6 +84,7 @@ function Area:addGameObject(type,x,y,opts)
 	return gameObject
 end
 
+--not every area needs a physics world, just for expansion purposes
 function Area:addPhysicsWorld()
 	self.world = Physics.newWorld(0,0,true)
 end

@@ -7,17 +7,18 @@ function Stage:new(opts)
 	requireFiles(objectFiles)
 
 	--The "self." modifier is here so we can use the Stage class across multipla gemes/apps.
+	--the self in "Area(self)" is a callback to this Stage class
 	self.area = Area(self)
 	--As I will use this system across multipme implementations, we don't want to always have a physics world atttached.
 	self.area:addPhysicsWorld()
 
 
-	scrW, scrH = 320, 240
+	self.screenW, self.screenH = 320, 240
 	if opts ~= nil then
 		for k,v in pairs(opts) do self[k] = v end
 	end
 	
-	self.mainCanvas = love.graphics.newCanvas(scrW,scrH)
+	self.mainCanvas = love.graphics.newCanvas(self.screenW,self.screenH)
 	self.mainCanvas:setFilter("nearest","nearest")
 	love.graphics.setLineStyle("rough")
 	--[[
@@ -25,7 +26,7 @@ function Stage:new(opts)
 		game object which we can store in order to manipulate and track
 		the player from inside the room.
 	--]]
-	self.player = self.area:addGameObject("Player",scrW/2,scrH/2)
+	self.player = self.area:addGameObject("Player",self.screenW/2,self.screenH/2)
 	
 
 end
@@ -45,10 +46,10 @@ function Stage:draw()
 	love.graphics.setCanvas(self.mainCanvas)
 		love.graphics.clear()
 		self.area:draw()
-		love.graphics.circle("fill", scrW/2, scrH/2, 5)
+		--love.graphics.circle("fill", self.screenW/2, self.screenH/2, 5)
 	love.graphics.setCanvas()
 
-    camera:attach(0,0,scrW,scrH)
+    camera:attach(0,0,self.screenW,self.screenH)
    	 	love.graphics.draw(self.mainCanvas, 0, 0, 0, 3, 3)
     camera:detach()
 end
