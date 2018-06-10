@@ -22,15 +22,18 @@ function Player:new(area,x,y,opts)
 	self.maxVelocity = 100
 	self.acceleration = 20
 --MOVEMENT VARIABLES
-	timer:every(0.01,function() self.area:addGameObject("Trail",self.x,self.y,{r=14})end)
+	--timer:every(0.01,function() self.area:addGameObject("Trail",self.x,self.y,{r=14})end)
+	--shoot every 0.25 seconds
+	timer:every(0.25,function() self:shoot() end)
 
 end
 
 function Player:update(dt)
+	--we update the x and y value to match the values of the collider in the parent object
+	--the bellow specifies to firstly run the update function of the parent object
 	Player.super.update(self,dt)
 
 	--the player dies when it moves off-screen
-
     if self.x < 0 then self.dead = true end
     if self.y < 0 then self.dead = true end
     if self.x > self.area.room.screenW then self.dead = true end
@@ -49,9 +52,12 @@ function Player:update(dt)
 end
 
 function Player:draw()
-		love.graphics.line(self.x,self.y,self.x+2*8*math.cos(self.rotation),self.y+2*8*math.sin(self.rotation))
-		love.graphics.setColor(0, 0, 0)
-		love.graphics.circle("fill", self.x, self.y,self.w-1)
+		love.graphics.setColor(defaultColour)
+		--funny resoults if we change the x for the second point to +amount, almost gives off a fake 3d effect 
+		--love.graphics.line(self.x,self.y,self.x+2*self.w*math.cos(self.rotation),self.y+2*self.w*math.sin(self.rotation))
+		love.graphics.line(self.x+1*self.w*math.cos(self.rotation),self.y+1*self.w*math.sin(self.rotation),self.x+2*self.w*math.cos(self.rotation),self.y+2*self.w*math.sin(self.rotation))
+		
+		--love.graphics.circle("fill", self.x, self.y,self.w-1)
 		love.graphics.setColor(255, 255, 255)
 		love.graphics.circle("line", self.x, self.y,self.w)
 		
@@ -71,6 +77,20 @@ function Player:draw()
 		--]]
 end
 
+function Player:trash()
+    Player.super.trash(self)
+end
+
+function Player:shoot()
+
+	self.area:addGameObject ("ProjectileFX",
+								self.x+1.2*self.w*math.cos(self.rotation),
+								self.y+1.2*self.w*math.sin(self.rotation),{playerObject = self})
+end
+
+
+--attempt at lerping function for smoothly transitioning the velocity of the object
+--unused
 function lerp(a,b,t)
 	return (1-t)*a + t*b 
 end
