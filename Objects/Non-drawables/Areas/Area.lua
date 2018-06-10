@@ -24,6 +24,9 @@ function Area:new(room)
 	self.playerCanvas = love.graphics.newCanvas(room.screenW, room.screenH)
 	self.playerCanvas:setFilter("nearest","nearest")
 
+	self.defaultCanvas = love.graphics.newCanvas(room.screenW, room.screenH)
+	self.defaultCanvas:setFilter("nearest","nearest")
+
 
 end
 
@@ -35,7 +38,6 @@ function Area:update(dt)
 		local gameObject = self.gameObjectArray[i]
 		gameObject:update(dt)
 		--we trash the object so there are no references to it, just like it deserves
-		
 		if gameObject.dead then 
 			gameObject:trash()
 			table.remove(self.gameObjectArray, i) 
@@ -50,6 +52,7 @@ function Area:draw()
 	--draw all the objects inside of gameObjectArray
 
 	for i, gameObject in ipairs(self.gameObjectArray) do
+
 		if gameObject.type == "Player" then
 			love.graphics.setCanvas(self.playerCanvas)
 				love.graphics.clear()
@@ -63,9 +66,12 @@ function Area:draw()
 			love.graphics.setCanvas()
 
 		else
-			love.graphics.setColor(255, 0, 0)
-			love.graphics.print("ERROR: Ga",room.screenW, room.screenH)
-			love.graphiccs.setColor(255,255,255)
+			love.graphics.setCanvas(self.defaultCanvas) 	
+				love.graphics.clear()
+				love.graphics.setColor(255, 0, 0)
+				love.graphics.print("ERROR: Ga",self.room.screenW, self.room.screenH)
+				love.graphics.setColor(255,255,255)
+			love.graphics.setCanvas()
 		end
 	end
 		
@@ -74,7 +80,7 @@ function Area:draw()
 		
 		love.graphics.draw(self.trailCanvas,0,0)
 		love.graphics.draw(self.playerCanvas,0,0)
-		
+		love.graphics.draw(self.defaultCanvas,0,0)
 	love.graphics.setCanvas()
 	love.graphics.draw(self.mainCanvas,0,0,0,3,3)
 end

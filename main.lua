@@ -20,7 +20,7 @@ io.stdout:setvbuf("no")
 	Utilities = require 'Libraries/utilities'
 	Physics = require "Libraries/windfield"
 	Camera = require "Libraries/STALKER-X-master/camera"
---Libraries
+--Librariesa
 
 function love.load()
 	love.window.setMode(960,720)
@@ -45,6 +45,7 @@ function love.load()
 	input:bind("e","testkey")
 	input:bind("a","left")
 	input:bind("d","right")
+	input:bind("t", "die")
 --Defining Inputs
 	
 --Garbage Collection Debug
@@ -58,7 +59,10 @@ function love.load()
         print("-------------------------------------")
     end)
 --Garbage Collection Debug
-	
+	X = 10
+	Y = 20
+	A = X.."+"..Y
+	print(A)
 --Room System
 	currentRoom = nil 
 	goToRoom("Stage")
