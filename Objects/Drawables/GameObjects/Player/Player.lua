@@ -70,6 +70,10 @@ function Player:draw()
 		--love.graphics.line(self.x,self.y,self.x+2*5*math.cos(self.rotation),self.y+2*5*math.sin(self.rotation))
 		--]]
 end
+--Trashing the player when 
+function Player:trash()
+    Player.super.trash(self)
+end
 
 function lerp(a,b,t)
 	return (1-t)*a + t*b 

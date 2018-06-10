@@ -28,4 +28,8 @@ function PlayerExplosion:draw()
 end
 
 
+function PlayerExplosion:trash()
+    PlayerExplosion.super.trash(self)
+end
+
 return PlayerExplosion

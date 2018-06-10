@@ -10,6 +10,8 @@ function Area:new(room)
 	self.room = room
 	self.gameObjectArray = {}
 
+
+
 	--[[Too add a new object type to the screen we will have to create a canvas here for it
 		then add an if statement to the draw class to identify the objects from the stack
 		then draw them in the proper order]]--
@@ -32,7 +34,12 @@ function Area:update(dt)
 	for i = #self.gameObjectArray, 1, -1 do
 		local gameObject = self.gameObjectArray[i]
 		gameObject:update(dt)
-		if gameObject.dead then table.remove(self.gameObjectArray, i) end
+		--we trash the object so there are no references to it, just like it deserves
+		
+		if gameObject.dead then 
+			gameObject:trash()
+			table.remove(self.gameObjectArray, i) 
+		end
 	end
 
 	
@@ -87,6 +94,24 @@ end
 --not every area needs a physics world, just for expansion purposes
 function Area:addPhysicsWorld()
 	self.world = Physics.newWorld(0,0,true)
+end
+
+--garbage collection
+function Area:trash()
+	--Trashing all the gameobjects in this level
+	for i = #self.gameObjectArray, 1, -1 do
+		local gameObject = self.gameObjectArray[i]
+		gameObject:trash()
+		table.remove(self.gameObjectArray,i)
+	end
+	--trashing the array itself
+	self.gameObjectArray = {}
+
+	--trashing the physics world and the reference to it
+	if self.world then 
+		self.world:destroy()
+		self.world = nil
+	end
 end
 
 return Area

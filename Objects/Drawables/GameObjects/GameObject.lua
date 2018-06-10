@@ -29,8 +29,17 @@ end
 
 function GameObject:draw()
 	
-
 end
+
+
+--garbage collection
+function GameObject:trash()
+	--if self.timer then self.timer.destroy()end
+	if self.collider then self.collider:destroy() end
+	self.collider = nil
+	self = nil
+end
+
 
 
 function createRandomId()
@@ -41,6 +50,7 @@ function createRandomId()
     end
     return (("xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"):gsub("[xy]", fn))
 end
+
 
 
 return GameObject
