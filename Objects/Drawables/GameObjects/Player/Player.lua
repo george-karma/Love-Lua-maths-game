@@ -24,7 +24,8 @@ function Player:new(area,x,y,opts)
 	self.maxVelocity = 100
 	self.acceleration = 20
 --MOVEMENT VARIABLES
-	timer:every(0.02,function() self.area:addGameObject("Trail",self.x,self.y,{radius=10})end)
+	
+	timer:every(0.02,function() self:trail()end)
 	--timer:every(0.25,function() self:shoot() end)
 
 end
@@ -63,14 +64,15 @@ function Player:draw()
 			localRotation(self.x+1*self.w*math.cos(self.rotation),
 						self.y+1*self.w*math.sin(self.rotation), math.pi/2)
 		--]]
+
 		love.graphics.line(self.x+1*self.w*math.cos(self.rotation),
 							self.y+1*self.w*math.sin(self.rotation),
-							self.x+2*self.w*math.cos(self.rotation),
-							self.y+2*self.w*math.sin(self.rotation))
+							self.x+1.3*self.w*math.cos(self.rotation),
+							self.y+1.3*self.w*math.sin(self.rotation))
 		--love.graphics.circle("fill", self.x, self.y,self.w-1)
 		love.graphics.setColor(255, 255, 255)
 
-		love.graphics.circle("line", self.x, self.y,self.w)
+		love.graphics.circle("fill", self.x, self.y,self.w)
 		
 		--[[ UNUSED 
 		love.graphics.push()
@@ -89,11 +91,12 @@ end
 
 --temoporary not used on the player object, to be merged with the die() fucntion
 function Player:trash()
+
+	Player.super.trash(self)
+
 	for i = 1, love.math.random(8,12) do
     	self.area:addGameObject("PlayerExplosion", self.x, self.y)
     end
-    Player.super.trash(self)
-    
 
 end
 
@@ -103,7 +106,11 @@ function Player:shoot()
 								self.x+1.2*self.w*math.cos(self.rotation),
 								self.y+1.2*self.w*math.sin(self.rotation),{playerObject = self})
 end
-
+function Player:trail()
+	if self.dead ~= true then
+		self.area:addGameObject("Trail",self.x,self.y,{radius=10})
+	end
+end
 --for now its easier and faster to copy this fucntion around rather than making my own library
 function localRotation(xLocation,yLocation,rotation)
 	love.graphics.push()

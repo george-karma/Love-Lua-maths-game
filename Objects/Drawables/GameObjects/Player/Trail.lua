@@ -11,8 +11,10 @@ function Trail:new(area,x,y,opts)
 	self.x,self.y=x,y 
 	randomRadius = math.random(-4,3)
 
-	timer:tween(0.3 , self, {radius = 0},"linear")
-	timer:after(0.2,function() self.dead = true end)
+	if self.dead ~= true then
+		self.timer:tween(0.3 , self, {radius = 0},"linear")
+	end
+	self.timer:after(0.2,function() self.dead = true end)
 
 end
 
@@ -25,7 +27,7 @@ end
 
 
 function Trail:draw()
-    love.graphics.setColor(0, 255, 0)
+    love.graphics.setColor(greenColour)
 	love.graphics.circle("line", self.x, self.y, self.radius )
 	--print(PlayerObject.angle)
 	love.graphics.setBlendMode("subtract")
@@ -35,7 +37,11 @@ function Trail:draw()
 		
 	end
 	love.graphics.setBlendMode("alpha")
-	love.graphics.setColor(255, 255, 255)
+	
+	love.graphics.setColor(25,255,150,25)
+		love.graphics.circle("line", self.x, self.y, self.radius+6 )
+	love.graphics.setColor(defaultColour)
+
 end
 
 --unused function, remove or integrate
