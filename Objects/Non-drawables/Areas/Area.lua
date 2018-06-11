@@ -38,10 +38,10 @@ function Area:update(dt)
 		local gameObject = self.gameObjectArray[i]
 		gameObject:update(dt)
 		--we trash the object so there are no references to it, just like it deserves
-<<<<<<< HEAD:Objects/Non-drawables/Areas/Area.lua
+-- HEAD:Objects/Non-drawables/Areas/Area.lua
 		
-=======
->>>>>>> player:Objects/Non-drawables/Areas/Area.lua
+
+-- player:Objects/Non-drawables/Areas/Area.lua
 		if gameObject.dead then 
 			gameObject:trash()
 			table.remove(self.gameObjectArray, i) 

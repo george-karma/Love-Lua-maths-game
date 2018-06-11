@@ -65,14 +65,14 @@ function love.load()
         print("-------------------------------------")
     end)
 --Garbage Collection Debug
-<<<<<<< HEAD
+--HEAD
 	
-=======
+
 	X = 10
 	Y = 20
 	A = X.."+"..Y
 	print(A)
->>>>>>> player
+-- player
 --Room System
 	currentRoom = nil 
 	goToRoom("Stage")
