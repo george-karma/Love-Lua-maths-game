@@ -38,12 +38,19 @@ function Trail:draw()
 end
 
 --unused function, remove or integrate
+<<<<<<< HEAD:Objects/Drawables/GameObjects/Player/Trail.lua
 function Trail:angleTrails(xLocation,yLocation,rotation)
+=======
+function Trail:graphicsRotate(xLocation,yLocation,rotation)
+>>>>>>> player:Objects/Drawables/GameObjects/Player/Trail.lua
 	love.graphics.push()
 	love.graphics.translate(xLocation,yLocation)
 	love.graphics.rotate(rotation or 0)
 	love.graphics.translate(-xLocation, -yLocation)
-	love.graphics.pop()
+end
+
+function Trail:trash()
+    Trail.super.trash(self)
 end
 
 function Trail:trash()

@@ -2,10 +2,16 @@
  	Add all licences in the 'licences' folder.
  	Integrate Player Design with main branch.--Done
  	Create an object that randomly generates math problems.
- 	Add collision events
+ 	Add collision events--Done
  	Mess around with the movement variables in the player object--Done
+<<<<<<< HEAD
 	Add Gargabe colection--Done
 	Test is adding "gameObject = nil" to the game loop will affect garabaeg collection
+=======
+	Add Gargabe colection
+	Fix Camera Shake
+	Experiment with the formula for drwaing the player, mith get interestign results
+>>>>>>> player
  	]]--
 
 --Code for debbuging in realtime 
@@ -19,7 +25,7 @@ io.stdout:setvbuf("no")
 	Utilities = require 'Libraries/utilities'
 	Physics = require "Libraries/windfield"
 	Camera = require "Libraries/STALKER-X-master/camera"
---Libraries
+--Librariesa
 
 function love.load()
 
@@ -45,6 +51,7 @@ function love.load()
 	input:bind("e","testkey")
 	input:bind("a","left")
 	input:bind("d","right")
+	input:bind("t", "die")
 --Defining Inputs
 	
 --Garbage Collection Debug
@@ -58,7 +65,14 @@ function love.load()
         print("-------------------------------------")
     end)
 --Garbage Collection Debug
+<<<<<<< HEAD
 	
+=======
+	X = 10
+	Y = 20
+	A = X.."+"..Y
+	print(A)
+>>>>>>> player
 --Room System
 	currentRoom = nil 
 	goToRoom("Stage")

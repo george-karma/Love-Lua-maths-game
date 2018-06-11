@@ -37,7 +37,11 @@ function GameObject:trash()
 	--if self.timer then self.timer.destroy()end
 	if self.collider then self.collider:destroy() end
 	self.collider = nil
+<<<<<<< HEAD:Objects/Drawables/GameObjects/GameObject.lua
 	self = nil
+=======
+	self.dead = true
+>>>>>>> player:Objects/Drawables/GameObjects/GameObject.lua
 end
 
 
