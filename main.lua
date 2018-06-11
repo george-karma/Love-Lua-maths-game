@@ -25,6 +25,7 @@ io.stdout:setvbuf("no")
 	Utilities = require 'Libraries/utilities'
 	Physics = require "Libraries/windfield"
 	Camera = require "Libraries/STALKER-X-master/camera"
+	Draft = require "Libraries/draft-master/draft"
 --Librariesa
 
 function love.load()
@@ -41,6 +42,7 @@ function love.load()
 	timer = Timer()
 	input = Input()
 	camera = Camera()
+	local draft = Draft()
 	--We need lerping and a follow style otherwise the shake won't work.
 	camera:setFollowLerp(0.2)
 	camera:setFollowStyle("LOCKON")
@@ -104,7 +106,6 @@ end
 function love.draw()
 	if currentRoom then currentRoom:draw(dt) end
 	
-
 end
 
 function  goToRoom(roomType)

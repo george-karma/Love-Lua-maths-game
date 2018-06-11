@@ -11,7 +11,10 @@ function Stage:new(opts)
 	self.area = Area(self)
 	--As I will use this system across multipme implementations, we don't want to always have a physics world atttached.
 	self.area:addPhysicsWorld()
-
+	--adding collision classes
+	self.area.world:addCollisionClass("Player")
+	self.area.world:addCollisionClass("Enemy")
+	self.area.world:addCollisionClass("Collectable")
 
 	self.screenW, self.screenH = 320, 240
 	if opts ~= nil then

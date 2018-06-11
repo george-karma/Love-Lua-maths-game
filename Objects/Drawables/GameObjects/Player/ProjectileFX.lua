@@ -2,7 +2,7 @@ local ProjectileFX = GameObject:extend()
 
 --the new function is its constructor but it does not run automatically :(
 function ProjectileFX:new(area,x,y,opts)
-	Player.super.new(self,area,x,y,opts)
+	Trail.super.new(self,area,x,y,opts)
 	--used to identify the object when deciding the draw order
 	self.type = "Trail"
 	self.area = area
@@ -15,7 +15,7 @@ end
 
 
 function ProjectileFX:update(dt)
-	Player.super.update(self,dt)
+	Trail.super.update(self,dt)
 	--by checking that the playerObject exists we avoid some errors
 	if self.playerObject then
 		self.x =self.playerObject.x + 1.2*self.playerObject.w*math.cos(self.playerObject.rotation)

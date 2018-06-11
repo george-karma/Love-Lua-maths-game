@@ -2,7 +2,7 @@ local Trail = GameObject:extend()
 
 --the new function is its constructor but it does not run automatically :(
 function Trail:new(area,x,y,opts)
-	Player.super.new(self,area,x,y,opts)
+	Trail.super.new(self,area,x,y,opts)
 	--used to identify the object when deciding the draw order
 	self.order = 19
 	self.type = "Trail"
@@ -20,7 +20,7 @@ end
 
 
 function Trail:update(dt)
-	Player.super.update(self,dt)
+	Trail.super.update(self,dt)
 	--angle = math.atan2(y - playerObject.previousy, x - playerObject.previousx)*180/math.pi
 
 end
@@ -48,7 +48,7 @@ end
 -- HEAD:Objects/Drawables/GameObjects/Player/Trail.lua
 
 
-function Trail:graphicsRotate(xLocation,yLocation,rotation)
+function localRotation(xLocation,yLocation,rotation)
 -- player:Objects/Drawables/GameObjects/Player/Trail.lua
 	love.graphics.push()
 	love.graphics.translate(xLocation,yLocation)

@@ -1,9 +1,11 @@
 --GameObject = require "Objects/GameObjects/GameObject"
+--if error "attempt to index global 'OBJ' (a nil value)" appears, check to make sure that alll the object calls are its own
 local Player = GameObject:extend()
 
 function Player:new(area,x,y,opts)
 	Player.super.new(self,area,x,y,opts)
-	--used to identify the object when deciding the draw order
+	----used to identify the object when deciding the draw order
+	--not used anymore
 	self.order = 60
 	self.type = "Player"
 	self.dead = false
@@ -14,6 +16,7 @@ function Player:new(area,x,y,opts)
 	--attaching the physics collider to the player object
 	--We can also use "getObject to "
 	self.collider:setObject(self)
+	self.area.world:addCollisionClass("Player")
 	--setGravity has x and y arguments
 	--self.area.world:setGravity(0,512)
 --MOVEMENT VARIABLES
