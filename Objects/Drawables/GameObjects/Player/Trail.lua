@@ -4,14 +4,15 @@ local Trail = GameObject:extend()
 function Trail:new(area,x,y,opts)
 	Player.super.new(self,area,x,y,opts)
 	--used to identify the object when deciding the draw order
+	self.order = 19
 	self.type = "Trail"
 	self.area = area
 	self.dead = false
 	self.x,self.y=x,y 
 	randomRadius = math.random(-4,3)
 
-	timer:tween(0.2 , self, {x = 0},"linear")
-	timer:every(0.2,function() self.dead = true end)
+	timer:tween(0.3 , self, {radius = 0},"linear")
+	timer:after(0.2,function() self.dead = true end)
 
 end
 
@@ -25,7 +26,7 @@ end
 
 function Trail:draw()
     love.graphics.setColor(0, 255, 0)
-	love.graphics.circle("line", self.x, self.y, self.r + randomRadius)
+	love.graphics.circle("line", self.x, self.y, self.radius )
 	--print(PlayerObject.angle)
 	love.graphics.setBlendMode("subtract")
 	for i = 0, 360, 2 do

@@ -4,6 +4,7 @@ local Player = GameObject:extend()
 function Player:new(area,x,y,opts)
 	Player.super.new(self,area,x,y,opts)
 	--used to identify the object when deciding the draw order
+	self.order = 60
 	self.type = "Player"
 	self.dead = false
 	self.x, self.y = x,y
@@ -23,7 +24,7 @@ function Player:new(area,x,y,opts)
 	self.maxVelocity = 100
 	self.acceleration = 20
 --MOVEMENT VARIABLES
-	timer:every(0.01,function() self.area:addGameObject("Trail",self.x,self.y,{r=14})end)
+	timer:every(0.02,function() self.area:addGameObject("Trail",self.x,self.y,{radius=10})end)
 	--timer:every(0.25,function() self:shoot() end)
 
 end
@@ -85,10 +86,6 @@ function Player:draw()
 		--]]
 end
 --Trashing the player when 
-function Player:trash()
-    Player.super.trash(self)
-end
-
 
 --temoporary not used on the player object, to be merged with the die() fucntion
 function Player:trash()

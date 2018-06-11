@@ -12,22 +12,6 @@ function Area:new(room)
 
 
 
-	--[[Too add a new object type to the screen we will have to create a canvas here for it
-		then add an if statement to the draw class to identify the objects from the stack
-		then draw them in the proper order]]--
-	self.mainCanvas = love.graphics.newCanvas(room.screenW, room.screenH)
-	self.mainCanvas:setFilter("nearest","nearest")
-
-	self.trailCanvas = love.graphics.newCanvas(room.screenW, room.screenH)
-	self.trailCanvas:setFilter("nearest","nearest")
-
-	self.playerCanvas = love.graphics.newCanvas(room.screenW, room.screenH)
-	self.playerCanvas:setFilter("nearest","nearest")
-
-	self.defaultCanvas = love.graphics.newCanvas(room.screenW, room.screenH)
-	self.defaultCanvas:setFilter("nearest","nearest")
-
-
 end
 
 function Area:update(dt)
@@ -36,16 +20,16 @@ function Area:update(dt)
 	--Update the gameObject inside of gameObjectArray and remove dead objects from the array.
 	for i = #self.gameObjectArray, 1, -1 do
 		local gameObject = self.gameObjectArray[i]
+		if gameObject.dead then 
+			table.remove(self.gameObjectArray, i) 
+			gameObject:trash()
+			
+		end
 		gameObject:update(dt)
 		--we trash the object so there are no references to it, just like it deserves
 -- HEAD:Objects/Non-drawables/Areas/Area.lua
-		
-
 -- player:Objects/Non-drawables/Areas/Area.lua
-		if gameObject.dead then 
-			gameObject:trash()
-			table.remove(self.gameObjectArray, i) 
-		end
+		
 	end
 
 	
@@ -54,39 +38,16 @@ end
 function Area:draw()
 	--if self.world then self.world:draw()end
 	--draw all the objects inside of gameObjectArray
+	table.sort(self.gameObjectArray, function(a,b)
+			if a.order and b.order then
+				return a.order<b.order
+			end
+		end)
 
 	for i, gameObject in ipairs(self.gameObjectArray) do
-
-		if gameObject.type == "Player" then
-			love.graphics.setCanvas(self.playerCanvas)
-				love.graphics.clear()
-				gameObject:draw()
-			love.graphics.setCanvas()
-
-		elseif gameObject.type == "Trail" then
-			love.graphics.setCanvas(self.trailCanvas)
-				love.graphics.clear()
-				gameObject:draw()
-			love.graphics.setCanvas()
-
-		else
-			love.graphics.setCanvas(self.defaultCanvas) 	
-				love.graphics.clear()
-				love.graphics.setColor(255, 0, 0)
-				love.graphics.print("ERROR: Ga",self.room.screenW, self.room.screenH)
-				love.graphics.setColor(255,255,255)
-			love.graphics.setCanvas()
-		end
+		gameObject:draw()
 	end
 		
-	love.graphics.setCanvas(self.mainCanvas)
-		love.graphics.clear()
-		
-		love.graphics.draw(self.trailCanvas,0,0)
-		love.graphics.draw(self.playerCanvas,0,0)
-		love.graphics.draw(self.defaultCanvas,0,0)
-	love.graphics.setCanvas()
-	love.graphics.draw(self.mainCanvas,0,0,0,3,3)
 end
 
 function Area:addGameObject(type,x,y,opts)

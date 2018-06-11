@@ -21,7 +21,7 @@ io.stdout:setvbuf("no")
 	require "globals"
 	Class = require 'Libraries/classic-master/classic'
 	Input = require 'Libraries/boipushy-master/Input'
-	Timer = require 'Libraries/hump-master/hump-master/timer'
+	Timer = require 'Libraries/chrono-master/Timer'
 	Utilities = require 'Libraries/utilities'
 	Physics = require "Libraries/windfield"
 	Camera = require "Libraries/STALKER-X-master/camera"

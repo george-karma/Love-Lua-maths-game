@@ -3,7 +3,7 @@ local GameObject = Class:extend()
 
 function GameObject:new(area,x,y,opts)
 	self.x, self.y = x, y
-	
+	self.layer = 50
 	--[[The error "bad argument #1 to 'pairs' (table expected, got number)" is solved by 
 		adding the "opts" variable to the class constructor, not just to the inherited class 
 		]]-- 
@@ -34,13 +34,12 @@ end
 
 --garbage collection
 function GameObject:trash()
-	--if self.timer then self.timer.destroy()end
+	if self.timer then self.timer.destroy()end
 	if self.collider then self.collider:destroy() end
 	self.collider = nil
 --HEAD:Objects/Drawables/GameObjects/GameObject.lua
-	self = nil
-
 	self.dead = true
+	
 -- player:Objects/Drawables/GameObjects/GameObject.lua
 end
 
