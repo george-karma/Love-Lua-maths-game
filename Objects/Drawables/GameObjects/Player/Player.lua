@@ -6,9 +6,10 @@ function Player:new(area,x,y,opts)
 	Player.super.new(self,area,x,y,opts)
 	----used to identify the object when deciding the draw order
 	--not used anymore
-	self.hp = self.area:addGameObject("HpBar",self.area.room.screenW/2, -self.area.room.screenH)
-	self.hpAmount = 200
-	self.order = 52
+	self.hp = self.area:addGameObject("HpBar",self.area.room.screenW/2-50,10)
+	self.answer = self.area:addGameObject("Answer",self.x,self.y,{playerObject = self})
+	self.hpAmount = 100
+	self.order = 53
 	self.type = "Player"
 	self.dead = false
 	self.x, self.y = x,y
@@ -24,9 +25,9 @@ function Player:new(area,x,y,opts)
 --MOVEMENT VARIABLES
 	--In LÖVE angles work in a clockwise way, meaning math.pi/2 is down and -math.pi/2 is up (and 0 is right)
 	self.rotation = -math.pi/2
-	self.rotationVelocity = 1.66*math.pi
+	self.rotationVelocity = 1.77*math.pi
 	self.currentVelocity = 0
-	self.maxVelocity = 100
+	self.maxVelocity = 70
 	self.acceleration = 20
 --MOVEMENT VARIABLES
 	timer:every(0.02,function() self:trail()end)
@@ -38,25 +39,32 @@ function Player:update(dt)
 	--we update the x and y value to match the values of the collider in the parent object
 	--the bellow specifies to firstly run the update function of the parent object
 	Player.super.update(self,dt)
-
 	--the player dies when it moves off-screen
+    if self.hpAmount == 0 then
+    	self.dead = true
+    end
     if self.x < 0 then   self.dead = true end
     if self.y < 0 then   self.dead = true end
     if self.x > self.area.room.screenW then   self.dead = true end
     if self.y > self.area.room.screenH then   self.dead = true end
 
+
   	if self.collider then
   		 if self.collider:enter("Enemy") then
-    		self.changeHp(0,200)
+  		 	local collision_data = self.collider:getEnterCollisionData('Enemy')
+    		local enemy = collision_data.collider:getObject()
+    		for i = 1, love.math.random(8,12) do
+    			self.area:addGameObject("PlayerExplosion", enemy.x, enemy.y,{colour =marineBlueColour, tweenTime = 1 })
+   				
+  			  end
+    		self:damage(10)
     	end
     end
 
-    if self.hpAmount == 0 then
-    	self.dead = true
-    end
+    
 
-    if input:down("die") then  self.dead = true end
-    if input:down("testkey") then 
+    if input:pressed("die") then  self.dead = true end
+    if input:pressed("testkey") then 
     	--self.area:addGameObject("Asteroid",love.math.random(0,self.area.room.screenW), love.math.random(0,self.area.room.screenH))
 		self.area:addGameObject("Asteroid",100,100)
 	end
@@ -74,7 +82,7 @@ function Player:update(dt)
 end
 
 function Player:draw()
-		love.graphics.setColor(defaultColour)
+		
 		--funny resoults if we change the x for the second point to +amount, almost gives off a fake 3d effect 
 		--love.graphics.line(self.x,self.y,self.x+2*self.w*math.cos(self.rotation),self.y+2*self.w*math.sin(self.rotation))
 		
@@ -109,16 +117,13 @@ end
 
 --temoporary not used on the player object, to be merged with the die() fucntion
 function Player:trash()
-
 	Player.super.trash(self)
-
 	for i = 1, love.math.random(8,12) do
-    	self.area:addGameObject("PlayerExplosion", self.x, self.y)
+    	self.area:addGameObject("PlayerExplosion", self.x, self.y,{colour = redColour})
     	camera:shake(3,0.5,60)
     end
-
 end
-
+--not used for now
 function Player:shoot()
 
 	self.area:addGameObject ("ProjectileFX",
@@ -130,18 +135,20 @@ function Player:trail()
 		self.area:addGameObject("Trail",self.x,self.y,{radius=10})
 	end
 end
-function Player:changeHp(direction,amount)
-	if direction == 0 then
-		self.hpAmount = self.hpAmount-amount
-		self.hp:damage(amount)
 
-	end
-
-	if direction == 1 then
-		self.hpAmount = self.hpAmount+amount
-		self.hp:heal(amount)
-	end
+function Player:damage(amount)
+	self.hpAmount = self.hpAmount-amount
+	camera:flash(0.05,{200,0,0,150})
+	self.hp:damage(amount)
 end
+
+function Player:heal(amount)
+	self.hpAmount = self.hpAmount+amount
+	self.hp:heal(amount)
+end
+
+
+
 --for now its easier and faster to copy this fucntion around rather than making my own library
 function localRotation(xLocation,yLocation,rotation)
 	love.graphics.push()

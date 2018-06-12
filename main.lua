@@ -1,19 +1,10 @@
 --[[TODO:
  	Add all licences in the 'licences' folder.
- 	Integrate Player Design with main branch.--Done
  	Create an object that randomly generates math problems.
- 	Add collision events--Done
- 	Mess around with the movement variables in the player object--Done
-<<<<<<< HEAD
-	Add Gargabe colection--Done
-	Test is adding "gameObject = nil" to the game loop will affect garabaeg collection
-=======
-	Add Gargabe colectionestign results
->>>>>>> player
-
+	Implement the answer input method
  	]]--
---Code for debbuging in realtime 
 
+--Code for debbuging in realtime 
 io.stdout:setvbuf("no")	
 --Libraries
 	require "globals"
@@ -51,6 +42,20 @@ function love.load()
 	input:bind("a","left")
 	input:bind("d","right")
 	input:bind("t", "die")
+	input:bind("return", "restart")
+	input:bind("kpenter", "restart")
+	input:bind("escape", "exit")
+	input:bind("kp0", "0")
+	input:bind("kp1", "1")
+	input:bind("kp2", "2")
+	input:bind("kp3", "3")
+	input:bind("kp4", "4")
+	input:bind("kp5", "5")
+	input:bind("kp6", "6")
+	input:bind("kp7", "7")
+	input:bind("kp8", "8")
+	input:bind("kp9", "9")
+	input:bind("backspace", "backspace")
 --Defining Inputs
 	
 --Garbage Collection Debug
@@ -76,11 +81,19 @@ function love.load()
 	goToRoom("Stage")
 --Room System
 end
+
 function love.update(dt)
 	timer:update(dt)
 	camera:update(dt)
 
 	if currentRoom then currentRoom:update(dt) end
+	if currentRoom.player and currentRoom.player.dead == true then
+		timer:after(0.5,function() 
+			camera:fade(6,{0,0,0,255})
+			goToRoom("GameOver")
+			camera:fade(3,{0,0,0,0})
+		 end)
+	end
 	--not working at the moment
 	--if input:pressed("testkey") then 
 	--	camera:shake(3,0.5,60) 
@@ -100,6 +113,7 @@ function love.update(dt)
 end
 
 function love.draw()
+	camera:draw()
 	if currentRoom then currentRoom:draw(dt) end
 	
 end
@@ -108,6 +122,7 @@ function  goToRoom(roomType)
 	if currentRoom and currentRoom.trash then currentRoom:trash() end
 	currentRoom = _G[roomType]()
 end
+
 
 -- *******FUNCTIONS CALLED ON LOAD********a
 function getFileList (folder, filePathList)

@@ -6,6 +6,7 @@ function Stage:new(opts)
 	--We need to access the object in the Stage class because it also acts as an interface.
 	requireFiles(objectFiles)
 
+	self.director = Director(self)
 	--The "self." modifier is here so we can use the Stage class across multipla gemes/apps.
 	--the self in "Area(self)" is a callback to this Stage class
 	self.area = Area(self)
@@ -35,11 +36,11 @@ function Stage:new(opts)
 end
 
 function Stage:update(dt)
-
+	
+	self.director:update(dt)
 	self.area:update(dt)
 	--Following the player based on its x and y.
 	--camera:follow(self.player.x*3, self.player.y*3)
-	
 	
 	
 	

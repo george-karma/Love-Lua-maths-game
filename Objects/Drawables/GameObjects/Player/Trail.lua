@@ -12,9 +12,9 @@ function Trail:new(area,x,y,opts)
 	randomRadius = math.random(-4,3)
 
 	if self.dead ~= true then
-		self.timer:tween(0.3 , self, {radius = 0},"linear")
+		self.timer:tween(0.5 , self, {radius = 0},"linear")
 	end
-	self.timer:after(0.2,function() self.dead = true end)
+	self.timer:after(0.4,function() self.dead = true end)
 
 end
 
@@ -27,7 +27,11 @@ end
 
 
 function Trail:draw()
-    love.graphics.setColor(greenColour)
+	if self.area.room.player then
+   		love.graphics.setColor(255-self.area.room.player.hpAmount*2,25+self.area.room.player.hpAmount*2,0)
+	else
+		love.graphics.setColor(greenColour)
+	end
 	love.graphics.circle("line", self.x, self.y, self.radius )
 	--print(PlayerObject.angle)
 	love.graphics.setBlendMode("subtract")
@@ -38,7 +42,7 @@ function Trail:draw()
 	end
 	love.graphics.setBlendMode("alpha")
 	
-	love.graphics.setColor(25,255,150,25)
+	love.graphics.setColor(255-self.area.room.player.hpAmount*2,25+self.area.room.player.hpAmount*2,0,25)
 		love.graphics.circle("line", self.x, self.y, self.radius+6 )
 	love.graphics.setColor(defaultColour)
 
@@ -54,10 +58,6 @@ function localRotation(xLocation,yLocation,rotation)
 	love.graphics.translate(xLocation,yLocation)
 	love.graphics.rotate(rotation or 0)
 	love.graphics.translate(-xLocation, -yLocation)
-end
-
-function Trail:trash()
-    Trail.super.trash(self)
 end
 
 function Trail:trash()

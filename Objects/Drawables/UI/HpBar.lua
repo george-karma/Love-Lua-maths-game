@@ -7,12 +7,12 @@ function HpBar:new(area,x,y,opts)
 	--define vertices
 	x1 = 0+self.x
 	y1 = 0+self.y
-	self.hpFront = 200+self.x
-	self.hpBack = 200+self.x
+	self.hpFront = 100+self.x
+	self.hpBack = 100+self.x
 	y2 = 0+self.y
-	y3 = 25+self.y
+	y3 = 10+self.y
 	x4 = 0+self.x
-	y4 = 25+self.y	
+	y4 = 10+self.y	
 	--define vertices
 end
 function HpBar:update(dt)
@@ -22,7 +22,7 @@ function HpBar:update(dt)
 	end
 end
 function HpBar:draw()
-	love.graphics.setColor(255, 0, 0)
+	love.graphics.setColor(255, 0, 0,200)
 	--love.graphics.polygon("fill", barFront)
 	love.graphics.polygon("fill",x1,y1,self.hpFront,y2,self.hpFront,y3,x4,y4)
 	love.graphics.setColor(255, 0, 100)
@@ -31,8 +31,8 @@ function HpBar:draw()
 	love.graphics.setColor(255, 255, 255)
 end
 function HpBar:damage(damageAmount)
-	hpHandleFront = timer:tween(1,self,{hpFront= self.hpFront-damageAmount},"linear",function()
-		hpHandleBack = timer:tween(1.5,self,{hpBack = self.hpBack-damageAmount}, "linear")
+	hpHandleFront = timer:tween(0.5,self,{hpFront= self.hpFront-damageAmount},"linear",function()
+		hpHandleBack = timer:tween(0.5,self,{hpBack = self.hpBack-damageAmount}, "linear")
 		end)
 		
 end

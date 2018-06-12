@@ -4,7 +4,7 @@ local ProjectileFX = GameObject:extend()
 function ProjectileFX:new(area,x,y,opts)
 	Trail.super.new(self,area,x,y,opts)
 	--used to identify the object when deciding the draw order
-	self.order = 53
+	self.order = 55
 	self.type = "FX"
 	self.area = area
 	self.dead = false
