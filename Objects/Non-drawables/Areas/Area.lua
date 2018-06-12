@@ -10,8 +10,6 @@ function Area:new(room)
 	self.room = room
 	self.gameObjectArray = {}
 
-
-
 end
 
 function Area:update(dt)
@@ -31,8 +29,6 @@ function Area:update(dt)
 -- player:Objects/Non-drawables/Areas/Area.lua
 		
 	end
-
-	
 end
 
 function Area:draw()

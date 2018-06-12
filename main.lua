@@ -8,15 +8,13 @@
 	Add Gargabe colection--Done
 	Test is adding "gameObject = nil" to the game loop will affect garabaeg collection
 =======
-	Add Gargabe colection
-	Fix Camera Shake
-	Experiment with the formula for drwaing the player, mith get interestign results
+	Add Gargabe colectionestign results
 >>>>>>> player
+
  	]]--
-
 --Code for debbuging in realtime 
-io.stdout:setvbuf("no")
 
+io.stdout:setvbuf("no")	
 --Libraries
 	require "globals"
 	Class = require 'Libraries/classic-master/classic'
@@ -29,7 +27,6 @@ io.stdout:setvbuf("no")
 --Librariesa
 
 function love.load()
-
 	love.window.setMode(960,720)
 --Getting all objects and libraries
 	objectFiles = {}
@@ -42,7 +39,7 @@ function love.load()
 	timer = Timer()
 	input = Input()
 	camera = Camera()
-	local draft = Draft()
+	draft = Draft()
 	--We need lerping and a follow style otherwise the shake won't work.
 	camera:setFollowLerp(0.2)
 	camera:setFollowStyle("LOCKON")
@@ -68,7 +65,6 @@ function love.load()
     end)
 --Garbage Collection Debug
 --HEAD
-	
 
 	X = 10
 	Y = 20
@@ -85,10 +81,10 @@ function love.update(dt)
 	camera:update(dt)
 
 	if currentRoom then currentRoom:update(dt) end
-
-	if input:pressed("testkey") then 
-		camera:shake(3,0.5,60) 
-	end
+	--not working at the moment
+	--if input:pressed("testkey") then 
+	--	camera:shake(3,0.5,60) 
+	--end
 
 --[[ INPUT EXAMPLES
 	if input:pressed('test') then print('pressed') end
@@ -113,17 +109,7 @@ function  goToRoom(roomType)
 	currentRoom = _G[roomType]()
 end
 
-
-
-
-
-
-
-
-
-
-
--- *******FUNCTIONS CALLED ON LOAD********
+-- *******FUNCTIONS CALLED ON LOAD********a
 function getFileList (folder, filePathList)
 	local files = love.filesystem.getDirectoryItems(folder)
 

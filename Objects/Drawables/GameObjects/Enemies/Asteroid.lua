@@ -2,7 +2,7 @@ local Asteroid = GameObject:extend()
 
 function Asteroid:new(area,x,y,opts)
 	Asteroid.super.new(self,area,x,y,opts)
-
+	self.order = 51
 	self.type = "Asteroid"
 	self.area = area
 	self.dead = false
@@ -17,12 +17,16 @@ function Asteroid:new(area,x,y,opts)
 	self.rotation =  love.math.random(0,2*math.pi)
 	self.collider:setLinearVelocity(self.velocity*math.cos(self.rotation),self.velocity*math.sin(self.rotation))
 	self.collider:applyAngularImpulse(love.math.random(-24,24))
-	self.are.worl:addCollisionClass("Enemy")
+	self.collider:setCollisionClass("Enemy")
 end
 
 
 function Asteroid:update(dt)
 	Asteroid.super.update(self,dt)
+    if self.x < 0 then   self.dead = true end
+    if self.y < 0 then   self.dead = true end
+    if self.x > self.area.room.screenW then   self.dead = true end
+    if self.y > self.area.room.screenH then   self.dead = true end
 	
 end
 
@@ -30,12 +34,13 @@ end
 function Asteroid:draw()
 	love.graphics.setColor(sunsetRedColour)
 	localRotation(self.x,self.y,self.collider:getAngle())
+	draft:rhombus(self.x,self.y,self.w,self.h, "line")
 	love.graphics.pop()
 	love.graphics.setColor(defaultColour)
 end
 
 function Asteroid:trash()
-	Asteroid.super.trash()
+	Asteroid.super.trash(self)
 	
 end
 

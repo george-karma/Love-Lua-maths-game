@@ -1,11 +1,10 @@
-local HpBar = Class:extend()
-function HpBar:new(x,y,opts)
+local HpBar = GameObject:extend()
+function HpBar:new(area,x,y,opts)
+	HpBar.super.new(self,area,opts)
 	self.dead=false
+	self.order = 55
 	self.x, self.y = x, y
-	self.creationTime = love.timer.getTime()
-	if opts ~= nil then
-		for k,v in pairs(opts) do self[k] = v end
-	end
+	--define vertices
 	x1 = 0+self.x
 	y1 = 0+self.y
 	self.hpFront = 200+self.x
@@ -14,8 +13,10 @@ function HpBar:new(x,y,opts)
 	y3 = 25+self.y
 	x4 = 0+self.x
 	y4 = 25+self.y	
+	--define vertices
 end
 function HpBar:update(dt)
+	HpBar.super.update(self,dt)
 	if self.hpBack == 0 then
 		self.dead = true
 	end
@@ -30,13 +31,17 @@ function HpBar:draw()
 	love.graphics.setColor(255, 255, 255)
 end
 function HpBar:damage(damageAmount)
-	hpHandleFront = timer:tween(1,self,{hpFront= self.hpFront-damageAmount},"linear")
-	hpHandleBack = timer:tween(1.5,self,{hpBack = self.hpBack-damageAmount}, "linear")
+	hpHandleFront = timer:tween(1,self,{hpFront= self.hpFront-damageAmount},"linear",function()
+		hpHandleBack = timer:tween(1.5,self,{hpBack = self.hpBack-damageAmount}, "linear")
+		end)
 		
 end
 function HpBar:heal(healAmount)
 	timer:cancel(hpHandleBack)
 	timer:cancel(hpHandleFront)
 	timer:tween(0.3,self,{hpFront = self.hpBack}, "linear")
+end
+function HpBar:trash()
+    HpBar.super.trash(self)
 end
 return HpBar

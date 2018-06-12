@@ -6,7 +6,9 @@ function Player:new(area,x,y,opts)
 	Player.super.new(self,area,x,y,opts)
 	----used to identify the object when deciding the draw order
 	--not used anymore
-	self.order = 60
+	self.hp = self.area:addGameObject("HpBar",self.area.room.screenW/2, -self.area.room.screenH)
+	self.hpAmount = 200
+	self.order = 52
 	self.type = "Player"
 	self.dead = false
 	self.x, self.y = x,y
@@ -16,7 +18,7 @@ function Player:new(area,x,y,opts)
 	--attaching the physics collider to the player object
 	--We can also use "getObject to "
 	self.collider:setObject(self)
-	self.area.world:addCollisionClass("Player")
+	self.collider:setCollisionClass("Player")
 	--setGravity has x and y arguments
 	--self.area.world:setGravity(0,512)
 --MOVEMENT VARIABLES
@@ -27,7 +29,6 @@ function Player:new(area,x,y,opts)
 	self.maxVelocity = 100
 	self.acceleration = 20
 --MOVEMENT VARIABLES
-	
 	timer:every(0.02,function() self:trail()end)
 	--timer:every(0.25,function() self:shoot() end)
 
@@ -44,7 +45,21 @@ function Player:update(dt)
     if self.x > self.area.room.screenW then   self.dead = true end
     if self.y > self.area.room.screenH then   self.dead = true end
 
+  	if self.collider then
+  		 if self.collider:enter("Enemy") then
+    		self.changeHp(0,200)
+    	end
+    end
+
+    if self.hpAmount == 0 then
+    	self.dead = true
+    end
+
     if input:down("die") then  self.dead = true end
+    if input:down("testkey") then 
+    	--self.area:addGameObject("Asteroid",love.math.random(0,self.area.room.screenW), love.math.random(0,self.area.room.screenH))
+		self.area:addGameObject("Asteroid",100,100)
+	end
 	--change the rotation variable left or right, like old RC cars
 	if input:down("left") then self.rotation = self.rotation - self.rotationVelocity*dt end
 	if input:down("right") then self.rotation = self.rotation + self.rotationVelocity*dt end
@@ -99,6 +114,7 @@ function Player:trash()
 
 	for i = 1, love.math.random(8,12) do
     	self.area:addGameObject("PlayerExplosion", self.x, self.y)
+    	camera:shake(3,0.5,60)
     end
 
 end
@@ -112,6 +128,18 @@ end
 function Player:trail()
 	if self.dead ~= true then
 		self.area:addGameObject("Trail",self.x,self.y,{radius=10})
+	end
+end
+function Player:changeHp(direction,amount)
+	if direction == 0 then
+		self.hpAmount = self.hpAmount-amount
+		self.hp:damage(amount)
+
+	end
+
+	if direction == 1 then
+		self.hpAmount = self.hpAmount+amount
+		self.hp:heal(amount)
 	end
 end
 --for now its easier and faster to copy this fucntion around rather than making my own library

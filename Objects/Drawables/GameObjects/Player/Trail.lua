@@ -4,7 +4,7 @@ local Trail = GameObject:extend()
 function Trail:new(area,x,y,opts)
 	Trail.super.new(self,area,x,y,opts)
 	--used to identify the object when deciding the draw order
-	self.order = 19
+	self.order = 50
 	self.type = "Trail"
 	self.area = area
 	self.dead = false
