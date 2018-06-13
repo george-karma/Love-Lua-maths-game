@@ -2,6 +2,7 @@
  	Add all licences in the 'licences' folder.
  	Create an object that randomly generates math problems.
 	Implement the answer input method
+	Put the off screen die code in the parent object
  	]]--
 
 --Code for debbuging in realtime 
@@ -34,7 +35,7 @@ function love.load()
 	--We need lerping and a follow style otherwise the shake won't work.
 	camera:setFollowLerp(0.2)
 	camera:setFollowStyle("LOCKON")
-	--physics = Physics()
+	--physics = Physics() 
 --Getting all objects and dlibraries
 
 --Defining Inputs
@@ -62,7 +63,7 @@ function love.load()
 	input:bind('f1', function()
         print("Before collection: " .. collectgarbage("count")/1024)
         collectgarbage()
-        print("After collection: " .. collectgarbage("count")/1024)
+        print("After collection: " .. collectgarbage("count")/a1024)
         print("Object count: ")
         local counts = type_count()
         for k, v in pairs(counts) do print(k, v) end

@@ -39,7 +39,7 @@ function Player:update(dt)
 	--we update the x and y value to match the values of the collider in the parent object
 	--the bellow specifies to firstly run the update function of the parent object
 	Player.super.update(self,dt)
-	--the player dies when it moves off-screen
+	--the player dies when it moves off-screenb
     if self.hpAmount == 0 then
     	self.dead = true
     end
@@ -51,13 +51,17 @@ function Player:update(dt)
 
   	if self.collider then
   		 if self.collider:enter("Enemy") then
-  		 	local collision_data = self.collider:getEnterCollisionData('Enemy')
-    		local enemy = collision_data.collider:getObject()
-    		for i = 1, love.math.random(8,12) do
-    			self.area:addGameObject("PlayerExplosion", enemy.x, enemy.y,{colour =marineBlueColour, tweenTime = 1 })
-   				
-  			  end
-    		self:damage(10)
+  		 	local collissionData = self.collider:getEnterCollisionData('Enemy')
+    		local enemy = collissionData.collider:getObject()
+    		local answer = tonumber(self.answer.answer)
+    		if answer== enemy.equation.equation then 
+    			enemy:damage(20)
+    			self:heal(10)
+    			self.answer.answer = ""
+    		else
+    			self:damage(10)
+    		end
+    		
     	end
     end
 
@@ -143,8 +147,11 @@ function Player:damage(amount)
 end
 
 function Player:heal(amount)
-	self.hpAmount = self.hpAmount+amount
-	self.hp:heal(amount)
+	if self.hpAmount<100 then
+		camera:flash(0.05,{0,200,0,150})
+		self.hpAmount = self.hpAmount+amount
+		self.hp:heal(amount)
+	end
 end
 
 

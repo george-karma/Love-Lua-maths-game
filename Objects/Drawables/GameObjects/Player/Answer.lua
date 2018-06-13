@@ -5,7 +5,7 @@ function Answer:new(area,x,y,opts)
 	Answer.super.new(self,area,x,y,opts)
 	--used to identify the object when deciding the draw order
 	self.order = 54
-	self.type = "Answer"
+	self.answer = ""
 	self.area = area
 	self.dead = false
 	self.x,self.y=x,y 
@@ -15,14 +15,26 @@ end
 function Answer:update(dt)
 	Answer.super.update(self,dt)
 	self.x,self.y = self.playerObject.x, self.playerObject.y
+	if input:pressed("backspace")then self.answer = self.answer:sub(1,-2) end
+	if input:pressed("0")then self.answer = self.answer .. 0 end
+	if input:pressed("1")then self.answer = self.answer .. 1 end
+	if input:pressed("2")then self.answer = self.answer .. 2 end
+	if input:pressed("3")then self.answer = self.answer .. 3 end
+	if input:pressed("4")then self.answer = self.answer .. 4 end
+	if input:pressed("5")then self.answer = self.answer .. 5 end
+	if input:pressed("6")then self.answer = self.answer .. 6 end
+	if input:pressed("7")then self.answer = self.answer .. 7 end
+	if input:pressed("8")then self.answer = self.answer .. 8 end
+	if input:pressed("9")then self.answer = self.answer .. 9 end
+	if input:pressed("9")then self.answer = self.answer .. 9 end
 end
 
 
 function Answer:draw()
 	
-	love.graphics.setColor(turqazColour)
+	love.graphics.setColor(blueColour)
 	love.graphics.setFont(defaultFont)
-	love.graphics.print("Test", self.x, self.y,0,1,1,10,8)
+	love.graphics.print(self.answer, self.x, self.y,0,1,1,11,8)
 	love.graphics.setColor(defaultColour)
 end
 
