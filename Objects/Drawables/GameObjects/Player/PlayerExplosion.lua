@@ -4,7 +4,7 @@ local PlayerExplosion = GameObject:extend()
 function PlayerExplosion:new(area,x,y,opts)
 	Player.super.new(self,area,x,y,opts)
 	--used to identify the object when deciding the draw order
-	self.order = 60
+	self.order = 70
 	self.type = "PlayerExplosion"
 	self.area = area
 	self.dead = false

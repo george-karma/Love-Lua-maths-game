@@ -9,6 +9,7 @@ function HpBar:new(area,x,y,opts)
 	y1 = 0+self.y
 	self.hpFront = 100+self.x
 	self.hpBack = 100+self.x
+	self.gage = 100+self.x
 	y2 = 0+self.y
 	y3 = 10+self.y
 	x4 = 0+self.x
@@ -26,7 +27,9 @@ function HpBar:draw()
 	--love.graphics.polygon("fill", barFront)
 	love.graphics.polygon("fill",x1,y1,self.hpFront,y2,self.hpFront,y3,x4,y4)
 	love.graphics.setColor(255, 0, 100)
-	love.graphics.polygon("line",x1,y1,self.hpBack,y2,self.hpBack,y3,x4,y4)
+	love.graphics.polygon("fill",x1,y1,self.hpBack,y2,self.hpBack,y3,x4,y4)
+	love.graphics.setColor(defaultColour,255)
+	love.graphics.polygon("line",x1,y1,self.gage,y2,self.gage,y3,x4,y4)
 	--love.graphics.polygon("line",barBack)
 	love.graphics.setColor(255, 255, 255)
 end
@@ -37,9 +40,9 @@ function HpBar:damage(damageAmount)
 		
 end
 function HpBar:heal(healAmount)
-	timer:cancel(hpHandleBack)
-	timer:cancel(hpHandleFront)
-	timer:tween(0.3,self,{hpFront = self.hpBack}, "linear")
+	timer:tween(0.2,self,{hpBack = self.hpBack+healAmount}, "linear",function()
+		timer:tween(0.3,self,{hpFront = self.hpFront+healAmount},"linear")
+		 end)
 end
 function HpBar:trash()
     HpBar.super.trash(self)

@@ -1,7 +1,5 @@
 --[[TODO:
  	Add all licences in the 'licences' folder.
- 	Create an object that randomly generates math problems.
-	Implement the answer input method
 	Put the off screen die code in the parent object
  	]]--
 
@@ -56,6 +54,8 @@ function love.load()
 	input:bind("kp7", "7")
 	input:bind("kp8", "8")
 	input:bind("kp9", "9")
+	input:bind("kp9", "9")
+	input:bind("kp-", "-")
 	input:bind("backspace", "backspace")
 --Defining Inputs
 	

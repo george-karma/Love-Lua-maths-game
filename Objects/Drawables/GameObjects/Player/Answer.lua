@@ -27,6 +27,7 @@ function Answer:update(dt)
 	if input:pressed("8")then self.answer = self.answer .. 8 end
 	if input:pressed("9")then self.answer = self.answer .. 9 end
 	if input:pressed("9")then self.answer = self.answer .. 9 end
+	if input:pressed("-")then self.answer = self.answer .. "-" end
 end
 
 
