@@ -7,8 +7,9 @@ function Equation:new(area,x,y,opts)
 	self.area = area
 	self.dead = false
 	self.x,self.y=x,y 
-	self.equation = nil
-	self.equationText = "eq"
+	self.points = 10
+	self.equation = "45"
+	self.equationText = ""
 	self:createRandomEquation()
 
 end
@@ -52,28 +53,38 @@ end
 
 function Equation:createRandomEquation()
 
-	self.coefficent = random(0,9)
-	self.coefficentText = tostring(self.coefficent)
-	self.constraint = random(0,9)
-	self.constraintText = tostring(self.constraint)
-	self.chance = random(0,100)
+	local coefficient = random(0,9)
+	self.coefficentText = tostring(coefficient)
+	local constraint = random(0,9)
+	self.constraintText = tostring(constraint)
+	local chance = random(0,100)
 	
 
-	if self.chance <= 25 then
-		self.equation = self.coefficent * self.constraint
+	if chance <= 25 then
+		self.equation = coefficient * constraint
 		self.equationText = self.coefficentText.."".."*"..""..self.constraintText
+		self.points  = 30
 	end
-	if self.chance > 25 and self.chance <=50 then
-		self.equation = self.coefficent / self.constraint
-		self.equationText = self.coefficentText.."".."/"..""..self.constraintText
+	if chance > 25 and chance <=50 then
+		if coefficient % constraint == 0 then
+			self.equation = coefficient / constraint
+			self.equationText = self.coefficentText.."".."/"..""..self.constraintText
+			self.points = 40
+		else
+			self.equation = coefficient * constraint
+			self.equationText = self.coefficentText.."".."*"..""..self.constraintText
+			self.points = 30
+		end
 	end
-	if self.chance >50 and self.chance <=75 then
-		self.equation = self.coefficent + self.constraint
+	if chance >50 and chance <=75 then
+		self.equation = coefficient + constraint
 		self.equationText = self.coefficentText.."".."+"..""..self.constraintText
+		self.points = 20
 	end
-	if self.chance >75 then 
-		self.equation = self.coefficent - self.constraint
+	if chance >75 then 
+		self.equation = coefficient - constraint
 		self.equationText = self.coefficentText.."".."-"..""..self.constraintText
+		self.points = 10
 	end
 	
 end

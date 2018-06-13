@@ -14,6 +14,7 @@ function Player:new(area,x,y,opts)
 	self.dead = false
 	self.x, self.y = x,y
 	self.w, self.h = 10, 10
+	self.points = 0
 	--Adding a new colider to the physics world inside of the area the player is in.
 	self.collider = self.area.world:newCircleCollider(self.x,self.y,self.w)
 	--attaching the physics collider to the player object
@@ -58,8 +59,13 @@ function Player:update(dt)
     			enemy:damage(20)
     			self:heal(10)
     			self.answer.answer = ""
+    				self.points = self.points + enemy.equation.points
     		else
     			self:damage(10)
+    			--only remove points if they are above 0/more than the points you are going to remove
+    			if self.points >=  enemy.equation.points/2 then
+    				self.points = self.points - enemy.equation.points/2
+    			end
     		end
     		
     	end
@@ -103,6 +109,7 @@ function Player:draw()
 		love.graphics.setColor(255, 255, 255)
 
 		love.graphics.circle("fill", self.x, self.y,self.w)
+		love.graphics.print("Score:"..self.points, 0,0)
 		
 		--[[ UNUSED 
 		love.graphics.push()
@@ -124,7 +131,7 @@ function Player:trash()
 	Player.super.trash(self)
 	for i = 1, love.math.random(8,12) do
     	self.area:addGameObject("PlayerExplosion", self.x, self.y,{colour = redColour})
-    	camera:shake(3,0.5,60)
+    	camera:shake(5,0.5,60)
     end
 end
 --not used for now

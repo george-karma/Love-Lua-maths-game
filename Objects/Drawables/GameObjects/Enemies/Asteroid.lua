@@ -8,8 +8,18 @@ function Asteroid:new(area,x,y,opts)
 	self.dead = false
 	self.x,self.y=x,y 
 	self.hp = 20
-	
-	self.equation = self.area:addGameObject("Equation",self.x,self.y,{asteroidObject = self})
+	self. equation = self.area:addGameObject("Equation",self.x,self.y,{asteroidObject = self})
+	--further expansion with difficulty levels
+	--[[
+	if self.difficulty == 1 then
+		self.equation = self.area:addGameObject("Equation",self.x,self.y,{asteroidObject = self,difficulty = 1})
+	else if self.difficulty==2
+		self.equation = self.area:addGameObject("Equation",self.x,self.y,{asteroidObject = self,difficulty = 2})
+	else if self.difficulty ==3
+		self.equation = self.area:addGameObject("Equation",self.x,self.y,{asteroidObject = self,difficulty = 3})
+	else if self.difficulty == 
+	end
+	--]]
 
 	self.w,self.h = 8,8
 	self.collider = self.area.world:newPolygonCollider(createIrregularPolygon(8))
@@ -41,6 +51,18 @@ function Asteroid:update(dt)
   			 end
     	end
     end
+
+    local target = self.area.player
+
+    --From programmign gameAI by example by Mat Buckland
+    if target then
+    	local heading = Vector(self.collider:getLinearVelocity()):normalised()
+    	local angle = math.atan2 (target.y - self.y, target.x - self.x)
+    	local targetHeading = Vector(math.cos(angle), math.sin(angle)):normalized()
+    	local finalHeading = (heading+0.1*targetHeading):normalized()
+    	self.collider:setLinearVelocity(self.velocity*finalHeading.x, self.velocity*finalHeading.y)
+    end
+    
 	
 end
 
