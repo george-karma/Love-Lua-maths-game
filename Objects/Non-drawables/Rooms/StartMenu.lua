@@ -26,10 +26,10 @@ function StartMenu:new(opts)
 	--Intro sequence
 	self.interImage = self.image3
 	cancelHandle =
-		timer:after(2,
+		timer:after(1.5,
 		function()
-			--play sound here
-			timer:tween(1.5, self, {alpha = 0}, "linear", 
+			logoSound:play()
+			timer:tween(1.7, self, {alpha = 0}, "linear", 
 			function()
 				self.interImage = self.image1
 				self.text = "Use A and D to steer your ship"
@@ -43,7 +43,7 @@ function StartMenu:new(opts)
 						timer:tween(1, self, {alpha = 255}, "linear",
 						function()
 							self.text2 = "Press Enter to play"
-							timer:tween(2, self, {text2Size = 2}, "linear")
+							timer:tween(2, self, {text2Size = 1.5}, "linear")
 						end)
 					end)
 				end)
@@ -73,7 +73,8 @@ function StartMenu:draw()
 		love.graphics.draw(self.interImage,0,0)
 
 		love.graphics.printf(self.text, self.screenW/2-140, self.screenH-60,240,"center")
-		love.graphics.print(self.text2, self.screenW/2, self.screenH/2-60,35,self.text2Size,self.text2Size)
+		love.graphics.setFont(defaultFont)
+		love.graphics.print(self.text2, self.screenW/2, self.screenH/2-40,0,self.text2Size,self.text2Size)
 		
 		--love.graphics.print("Game Over",self.screenW/2,self.screenH/2, 180 ,  self.sx, self.sy)
 		love.graphics.setColor(defaultColour)
@@ -87,6 +88,7 @@ function StartMenu:draw()
    	 	love.graphics.draw(self.mainCanvas, 0, 0, 0, 3, 3)
     camera:detach()
 end
+
 
 
 

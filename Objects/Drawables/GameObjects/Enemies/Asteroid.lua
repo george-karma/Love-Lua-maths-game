@@ -25,6 +25,7 @@ function Asteroid:new(area,x,y,opts)
 	self.rotation =  love.math.random(0,2*math.pi)
 	self.collider:setLinearVelocity(self.velocity*math.cos(self.rotation),self.velocity*math.sin(self.rotation))
 	self.collider:applyAngularImpulse(love.math.random(0,0))
+	self.sound = enemyExplosion
 	
 
 	--further expansion with difficulty levels
@@ -63,6 +64,7 @@ function Asteroid:update(dt)
     		self:damage(10)
     		if self.hp == 0 or self.hp<0 then
     			for i = 1, love.math.random(8,12) do
+    				self.sound:play(20)
     				self.dead = true
   			 	end
   			 end

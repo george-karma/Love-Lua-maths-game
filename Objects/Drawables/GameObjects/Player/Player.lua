@@ -15,6 +15,7 @@ function Player:new(area,x,y,opts)
 	self.x, self.y = x,y
 	self.w, self.h = 10, 10
 	self.points = 0
+	self.sound = playerExplosion
 	--Adding a new colider to the physics world inside of the area the player is in.
 	self.collider = self.area.world:newCircleCollider(self.x,self.y,self.w)
 	--attaching the physics collider to the player object
@@ -63,6 +64,7 @@ function Player:update(dt)
     			self.answer.answer = ""
     				self.points = self.points + enemy.equation.points
     		else
+    			self.answer.answer = ""
     			self:damage(10)
     			--only remove points if they are above 0/more than the points you are going to remove
     			if self.points >=  enemy.equation.points/2 then
@@ -75,11 +77,7 @@ function Player:update(dt)
 
     
 
-    if input:pressed("die") then  self.dead = true end
-    if input:pressed("testkey") then 
-    	--self.area:addGameObject("Asteroid",love.math.random(0,self.area.room.screenW), love.math.random(0,self.area.room.screenH))
-		self.area:addGameObject("Asteroid",50,50)
-	end
+    --if input:pressed("die") then  self.dead = true end
 	--change the rotation variable left or right, like old RC cars
 	if input:down("left") then self.rotation = self.rotation - self.rotationVelocity*dt end
 	if input:down("right") then self.rotation = self.rotation + self.rotationVelocity*dt end
@@ -130,7 +128,9 @@ end
 
 --temoporary not used on the player object, to be merged with the die() fucntion
 function Player:trash()
+	self.sound:play()
 	Player.super.trash(self)
+	
 	for i = 1, love.math.random(8,12) do
     	self.area:addGameObject("PlayerExplosion", self.x, self.y,{colour = redColour})
     	camera:shake(5,0.5,60)

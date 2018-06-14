@@ -25,9 +25,8 @@ function Area:update(dt)
 		end
 		gameObject:update(dt)
 		--we trash the object so there are no references to it, just like it deserves
--- HEAD:Objects/Non-drawables/Areas/Area.lua
--- player:Objects/Non-drawables/Areas/Area.lua
-		
+		-- HEAD:Objects/Non-drawables/Areas/Area.lua
+		-- player:Objects/Non-drawables/Areas/Area.lua	
 	end
 end
 

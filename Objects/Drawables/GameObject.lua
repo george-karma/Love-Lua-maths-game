@@ -23,9 +23,10 @@ end
 
 function GameObject:update(dt)
 	--only update the object if needed
-	if self.timer then self.timer:update(dt) end
+	if self.timer then self.timer:update(dt) end 
 	--if the child object has a collider, then sync the x and y coorinates of the collider and the object
 	if self.collider then self.x,self.y = self.collider:getPosition() end
+	if self.sound then self.sound:update(dt) end
 end
 
 function GameObject:draw()
@@ -38,6 +39,7 @@ function GameObject:trash()
 	self.timer:destroy()
 	if self.collider then self.collider:destroy() end
 	self.collider = nil
+	self.sound = nil
 --HEAD:Objects/Drawables/GameObjects/GameObject.lua
 	
 -- player:Objects/Drawables/GameObjects/GameObject.lua

@@ -52,10 +52,11 @@ io.stdout:setvbuf("no")
 	Class = require 'Libraries/classic-master/classic'
 	Input = require 'Libraries/boipushy-master/Input'
 	Timer = require 'Libraries/chrono-master/Timer'
-	Utilities = require 'Libraries/utilities'
 	Physics = require "Libraries/windfield"
 	Camera = require "Libraries/STALKER-X-master/camera"
 	Draft = require "Libraries/draft-master/draft"
+	audio = require "Libraries/wave-master/wave"
+
 --Librariesa
 
 function love.load()
@@ -114,6 +115,17 @@ function love.load()
     end)
 --Garbage Collection Debug
 --HEAD
+--Load Sounds
+deathTheme= audio:newSource('Resources/Sounds/deathTheme.ogg', "static")
+deathTheme:setLooping(true)
+enemyExplosion= audio:newSource('Resources/Sounds/enemyExplosion.ogg', "static")
+enemyExplosion:setVolume(20)
+logoSound= audio:newSource('Resources/Sounds/logoSound.ogg', "static")
+mainTheme= audio:newSource('Resources/Sounds/mainThemeAlternate.ogg', "static")
+mainThemeAlternate= audio:newSource('Resources/Sounds/deathTheme.ogg', "static")
+playerExplosion= audio:newSource('Resources/Sounds/playerExplosion.ogg', "static")
+mainThemeAlternate:setLooping(true)
+--Load Sounds
 
 -- player
 --Room System

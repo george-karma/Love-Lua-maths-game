@@ -12,6 +12,8 @@ function GameOver:new(opts)
 	self.mainCanvas = love.graphics.newCanvas(self.screenW,self.screenH)
 	self.mainCanvas:setFilter("nearest","nearest")
 	love.graphics.setLineStyle("rough")
+	self.sound = deathTheme
+	self.sound:play()
 	--size of text
 	self.sx , self.sy = 10,10
 	timer:tween(0.5,self,{sx = 1, sy=1},"in-quart")
@@ -26,7 +28,7 @@ function GameOver:new(opts)
 end
 
 function GameOver:update(dt)
-
+		
 	self.area:update(dt)
 	if input:pressed("exit") then
 		love.event.quit()
