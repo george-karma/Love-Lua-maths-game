@@ -50,6 +50,7 @@ function Stage:draw()
 	love.graphics.setCanvas(self.mainCanvas)
 		love.graphics.clear()
 		self.area:draw()
+		love.graphics.print("Wave:"..self.director.waveNumber,self.screenW-40,0)
 		--love.graphics.circle("fill", self.screenW/2, self.screenH/2, 5)
 	love.graphics.setCanvas()
 

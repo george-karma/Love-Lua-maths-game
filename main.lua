@@ -1,3 +1,35 @@
+--[[-------------------------------RAVEN MASK-------------------------------
+
+		                           `-+ydddNNMMNm+                              
+		                         `/yhhsyyhdmNMMMNy.                            
+		                        /yhdhy+sydddmNNMMMmo`                          
+		                       /ddhho/:+oyyNNMMMNMMNs-. ```` ``                
+		                    `/+sdyys+----+hMMMMMNNMNho+++o+/o++o+oo+/--.``     
+		                    /hhhNdy+//+++odMMMMMNNmy++++//+++oososysyyyyhh+-.  
+		                   :yhmNMMNysoso+oydNNmmdhsssso+oo+ososhyydhhddhmNdhhs+
+		                  :yddmNMMMNhssssso+osooo+soshyhhhhhdmNNNmdhyysosssoo+/oM
+		                 :yddNNMMMMMNddhhhyyyoosshmmNNNNNNNNNds/-.`            
+		                :yhdmMMMMMMMNNhhhdddmmNNMMMMMMMNNmdo-`                 
+		             `:+ydhdmNMMMMMNNNhdmmNNNNNMMMMMMNdy/.`                    
+		            .ydydmNNNNNMNMMNNNNdNNNNNMMMMMMMd-`                        
+		        -./ydhhdNMNNmNNNNNmddmNNNNNNMMMMMMM:                          
+		      .ohyosdddddmNmNmNmmdNNhdddmNMNMMMMMMMN.                          
+		     -dNdhhhdmmmddmmNNmNNNNNmmNmNNMMMMMMMMMMs                          
+		    .dNNhhdddmmmmNmdNNNdNNNmNhMNMMMMMMMMMMMMNo`                        
+		    /mNNdhddmmmddNNNmNNmNdNNMdmNMMMMMMMMMMMMMNs                        
+		   :yhdmdmdddmddNmNmNmmNyhNMMNmNMNMMMMMMMMMMMMN:                       
+		  /mdyhdmNmdddmmdmmmmdNmdmNMMNNMNNMMMMMMMMMMMMMd`                      
+		  hMNmmNNNmNdNNdmmmdNmNNdNNNNmNNMMNNMMMMMMMMMMMMo                      
+		  NMMNNMMMNNNNNmmmdmNmNmmNNmmmNNMMNMMMMMMMMMMMMMN-                     
+		 .NMMMMMMMMMMMNNNNmmNNNmmNNmNNNNNMMMMMMMMMMMMMMMMo                     
+		 -NNNNMMMMMMMMMMNNNNmNNNNmNNNNMMMMMMMMMMMMMMMMMMMy                     
+		s+hdNMMMMMMMMMMMMMMMNNNNMNNMMMMMMMMMMMMMMMMMMMMMMy                     
+		hdmNMMMMMMMMMMMMMMMMMMMMMMNMMMMMMMMMMMMMMMMMMMMMMy                     
+		mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNy                     
+		NMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN:/                     
+		odNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNm:                       
+		   :omNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN.
+--]]
 --[[TODO:
  	Add all licences in the 'licences' folder.
 	Put the off screen die code in the parent object
@@ -26,6 +58,7 @@ function love.load()
 
 	getFileList("Objects", objectFiles)
 	requireFiles(objectFiles)
+	--we need individual timers mostly if there are 
 	timer = Timer()
 	input = Input()
 	camera = Camera()
@@ -63,7 +96,7 @@ function love.load()
 	input:bind('f1', function()
         print("Before collection: " .. collectgarbage("count")/1024)
         collectgarbage()
-        print("After collection: " .. collectgarbage("count")/a1024)
+        print("After collection: " .. collectgarbage("count")/1024)
         print("Object count: ")
         local counts = type_count()
         for k, v in pairs(counts) do print(k, v) end
@@ -72,14 +105,10 @@ function love.load()
 --Garbage Collection Debug
 --HEAD
 
-	X = 10
-	Y = 20
-	A = X.."+"..Y
-	print(A)
 -- player
 --Room System
 	currentRoom = nil 
-	goToRoom("Stage")
+	goToRoom("StartMenu")
 --Room System
 end
 

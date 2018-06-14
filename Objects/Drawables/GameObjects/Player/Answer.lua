@@ -15,7 +15,9 @@ end
 function Answer:update(dt)
 	Answer.super.update(self,dt)
 	self.x,self.y = self.playerObject.x, self.playerObject.y
-	if input:pressed("backspace")then self.answer = self.answer:sub(1,-2) end
+	--delete the last character of the strign insted of the whole string
+	--if input:pressed("backspace")then self.answer = self.answer:sub(1,-2) end
+	if input:pressed("backspace")then self.answer = "" end
 	if input:pressed("0")then self.answer = self.answer .. 0 end
 	if input:pressed("1")then self.answer = self.answer .. 1 end
 	if input:pressed("2")then self.answer = self.answer .. 2 end
@@ -25,7 +27,6 @@ function Answer:update(dt)
 	if input:pressed("6")then self.answer = self.answer .. 6 end
 	if input:pressed("7")then self.answer = self.answer .. 7 end
 	if input:pressed("8")then self.answer = self.answer .. 8 end
-	if input:pressed("9")then self.answer = self.answer .. 9 end
 	if input:pressed("9")then self.answer = self.answer .. 9 end
 	if input:pressed("-")then self.answer = self.answer .. "-" end
 end

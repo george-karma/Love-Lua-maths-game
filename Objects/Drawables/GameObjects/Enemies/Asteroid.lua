@@ -6,9 +6,27 @@ function Asteroid:new(area,x,y,opts)
 	self.type = "Asteroid"
 	self.area = area
 	self.dead = false
-	self.x,self.y=x,y 
+
+	self.x = x
+	self.y = y
+	--Wow i really have to comment this huh
+	local direction = tableRandom({-1,1})
+	self.x= self.area.room.screenW/2 + direction*(self.area.room.screenW/2+5)
+	self.y = love.math.random(16, self.area.room.screenH/2 - 48)
+	self.equation = self.area:addGameObject("Equation",self.x,self.y,{asteroidObject = self})
 	self.hp = 20
-	self. equation = self.area:addGameObject("Equation",self.x,self.y,{asteroidObject = self})
+	self.w,self.h = 8,8
+	self.collider = self.area.world:newPolygonCollider(createIrregularPolygon(8))
+	self.collider:setPosition(self.x,self.y)
+	self.collider:setObject(self)
+	self.collider:setCollisionClass("Enemy")
+	self.collider:setFixedRotation(false)
+	self.velocity =  -direction*love.math.random(20,40)
+	self.rotation =  love.math.random(0,2*math.pi)
+	self.collider:setLinearVelocity(self.velocity*math.cos(self.rotation),self.velocity*math.sin(self.rotation))
+	self.collider:applyAngularImpulse(love.math.random(0,0))
+	
+
 	--further expansion with difficulty levels
 	--[[
 	if self.difficulty == 1 then
@@ -20,28 +38,27 @@ function Asteroid:new(area,x,y,opts)
 	else if self.difficulty == 
 	end
 	--]]
-
-	self.w,self.h = 8,8
-	self.collider = self.area.world:newPolygonCollider(createIrregularPolygon(8))
-	self.collider:setObject(self)
-	self.collider:setFixedRotation(false)
-	self.velocity =  love.math.random(10,20)
-	self.rotation =  love.math.random(0,2*math.pi)
-	self.collider:setLinearVelocity(self.velocity*math.cos(self.rotation),self.velocity*math.sin(self.rotation))
-	self.collider:applyAngularImpulse(love.math.random(-100,100))
-	self.collider:setCollisionClass("Enemy")
 end
 
 
 function Asteroid:update(dt)
 	Asteroid.super.update(self,dt)
-    if self.x < 0 then   self.dead = true end
-    if self.y < 0 then   self.dead = true end
-    if self.x > self.area.room.screenW then   self.dead = true end
-    if self.y > self.area.room.screenH then   self.dead = true end
+   
+    if self.x < -50 then   self.dead = true end
+    if self.y < -50 then   self.dead = true end
+    if self.x > self.area.room.screenW+50 then   self.dead = true end
+    if self.y > self.area.room.screenH+50 then   self.dead = true end
+	
+ 	if target then
+    	local heading = Vector(self.collider:getLinearVelocity()):normalised()
+    	local angle = math.atan2 (target.y - self.y, target.x - self.x)
+    	local targetHeading = Vector(math.cos(angle), math.sin(angle)):normalized()
+    	local finalHeading = (heading+0.1*targetHeading):normalized()
+    	self.collider:setLinearVelocity(self.velocity*finalHeading.x, self.velocity*finalHeading.y)
+    end
 
     if self.collider then
-  		 if self.collider:enter("Player") then
+  		if self.collider:enter("Player") then
   		 	local collision_data = self.collider:getEnterCollisionData('Player')
     		self:damage(10)
     		if self.hp == 0 or self.hp<0 then
@@ -55,17 +72,8 @@ function Asteroid:update(dt)
     local target = self.area.player
 
     --From programmign gameAI by example by Mat Buckland
-    if target then
-    	local heading = Vector(self.collider:getLinearVelocity()):normalised()
-    	local angle = math.atan2 (target.y - self.y, target.x - self.x)
-    	local targetHeading = Vector(math.cos(angle), math.sin(angle)):normalized()
-    	local finalHeading = (heading+0.1*targetHeading):normalized()
-    	self.collider:setLinearVelocity(self.velocity*finalHeading.x, self.velocity*finalHeading.y)
-    end
     
-	
 end
-
 
 function Asteroid:draw()
 	if self.hp > 10 then
@@ -96,7 +104,7 @@ function localRotation(xLocation,yLocation,rotation)
 	love.graphics.rotate(rotation or 0)
 	love.graphics.translate(-xLocation, -yLocation)
 end
-
+--return a point table for irregular polygon
 function createIrregularPolygon(size, pointAmount)
     local pointAmount = pointAmount or 8
     local points = {}
@@ -110,4 +118,7 @@ function createIrregularPolygon(size, pointAmount)
     return points
 end
 
+function tableRandom(t)
+    return t[love.math.random(1, #t)]
+end
 return Asteroid

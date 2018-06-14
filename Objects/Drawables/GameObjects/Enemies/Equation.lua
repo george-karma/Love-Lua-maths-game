@@ -17,18 +17,15 @@ end
 
 function Equation:update(dt)
 	--deciding the equation
+	Equation.super.update(self,dt)
 
 	if self.asteroidObject then
 		self.x,self.y = self.asteroidObject.x,self.asteroidObject.y
+		print(self.x)
 		if self.asteroidObject.dead then
 			self.dead = true
 		end
 	end
-	Equation.super.update(self,dt)
-    if self.x < 0 then   self.dead = true end
-    if self.y < 0 then   self.dead = true end
-    if self.x > self.area.room.screenW then   self.dead = true end
-    if self.y > self.area.room.screenH then   self.dead = true end
 		
 
 end
@@ -36,7 +33,9 @@ end
 
 function Equation:draw()
 	love.graphics.setFont(defaultFont)
+	love.graphics.setColor(marineBlueColour)
 	love.graphics.print(self.equationText,self.x,self.y)
+	love.graphics.setColor(defaultColour)
 end
 
 function Equation:trash()

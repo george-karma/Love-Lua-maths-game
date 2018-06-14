@@ -32,6 +32,8 @@ function Player:new(area,x,y,opts)
 	self.acceleration = 20
 --MOVEMENT VARIABLES
 	timer:every(0.02,function() self:trail()end)
+	--create the illusion of travelign thourgh space, WIP
+	--timer:every(0.2,function()self.area:addGameObject("PlayerExplosion", 0,love.math.random(0,self.area.room.screenH),{tweenTime = 60})end)
 	--timer:every(0.25,function() self:shoot() end)
 
 end
@@ -76,7 +78,7 @@ function Player:update(dt)
     if input:pressed("die") then  self.dead = true end
     if input:pressed("testkey") then 
     	--self.area:addGameObject("Asteroid",love.math.random(0,self.area.room.screenW), love.math.random(0,self.area.room.screenH))
-		self.area:addGameObject("Asteroid",100,100)
+		self.area:addGameObject("Asteroid",50,50)
 	end
 	--change the rotation variable left or right, like old RC cars
 	if input:down("left") then self.rotation = self.rotation - self.rotationVelocity*dt end

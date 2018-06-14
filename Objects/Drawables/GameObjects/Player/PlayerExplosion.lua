@@ -15,8 +15,7 @@ function PlayerExplosion:new(area,x,y,opts)
     self.size = opts.size or love.math.random(2, 3)
     self.velocity = opts.velocity or love.math.random(75, 150)
     self.lineWidth = opts.lineWidth or 2
-
-
+  
     --collider for velocity
     self.collider = self.area.world:newCircleCollider(self.x,self.y,1)
 	--self.collider = self.area.world:newLineCollider(self.x - self.size, self.y, self.x + self.size, self.y)
