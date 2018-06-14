@@ -16,23 +16,40 @@ function StartMenu:new(opts)
 	self.alpha = 255
 	self.image1 = love.graphics.newImage("Resources/Img/start1small.png")
 	self.image2 = love.graphics.newImage("Resources/Img/start2small.png")
+	self.image3 = love.graphics.newImage("Resources/Img/logoSmall.png")
 	self.textX, self.textY = 0,0
 	self.text ="RAVEN MASK"
+	self.text2 = ""
+	self.text2Size = 10
 
 
-
-	self.interImage = self.image1
-	cancelHandle = timer:tween(7, self, {alpha = 0}, "linear", 
+	--Intro sequence
+	self.interImage = self.image3
+	cancelHandle =
+		timer:after(2,
 		function()
-			self.interImage = self.image1
-			self.textX, self.textY = self.screenW/2-85, self.screenH-20
-			self.text = "Use A and D to steer your ship"
-			timer:tween(1, self, {alpha = 255}, "linear",
+			--play sound here
+			timer:tween(1.5, self, {alpha = 0}, "linear", 
+			function()
+				self.interImage = self.image1
+				self.text = "Use A and D to steer your ship"
+				timer:tween(4, self, {alpha = 255}, "linear",
 				function()
-
+					timer:tween(1, self, {alpha = 0}, "linear",
+					function()
+						self.interImage = self.image2
+						self.text = [[Use the numpad to enter the correct answer
+												Then smash into the incoming asteroids]]
+						timer:tween(1, self, {alpha = 255}, "linear",
+						function()
+							self.text2 = "Press Enter to play"
+							timer:tween(2, self, {text2Size = 2}, "linear")
+						end)
+					end)
 				end)
+			end)
 		end)
-	
+
 end
 
 function StartMenu:update(dt)
@@ -53,9 +70,10 @@ function StartMenu:draw()
 		self.area:draw()
 		love.graphics.setFont(defaultFont)
 		love.graphics.setColor(255, 255, 255, self.alpha)
-		--love.graphics.draw(self.interImage,0,0)
+		love.graphics.draw(self.interImage,0,0)
 
-		love.graphics.print(self.text,self.textX,self.textY)
+		love.graphics.printf(self.text, self.screenW/2-140, self.screenH-60,240,"center")
+		love.graphics.print(self.text2, self.screenW/2, self.screenH/2-60,35,self.text2Size,self.text2Size)
 		
 		--love.graphics.print("Game Over",self.screenW/2,self.screenH/2, 180 ,  self.sx, self.sy)
 		love.graphics.setColor(defaultColour)

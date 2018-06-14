@@ -11,7 +11,7 @@ function Director:new(room)
 
 	timer:every(self.waveDuration, function()
 			timer:after(self.interWaveCool, function() 
-					self.waveNumber = 1
+					self.waveNumber = self.waveNumber+1
 					self.waveDuration = self.waveDuration + 2.5
 					self.enemyCount = self.enemyCount + 1
 					timer:every(self.waveDuration/self.enemyCount, function()
