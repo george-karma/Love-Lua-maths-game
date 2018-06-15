@@ -13,17 +13,13 @@ function GameOver:new(opts)
 	self.mainCanvas:setFilter("nearest","nearest")
 	love.graphics.setLineStyle("rough")
 	self.sound = deathTheme
-	self.sound:play()
+	self.sound:fadeIn()
+	--self.sound:play()
 	--size of text
 	self.sx , self.sy = 10,10
 	timer:tween(0.5,self,{sx = 1, sy=1},"in-quart")
 	timer:after(1,function() camera:shake(6,0.25,60)end)
-	--[[
-		The addGameObject returns a reference to the created 
-		game object which we can store in order to manipulate and track
-		the player from inside the room.
-	--]]
-	
+
 
 end
 
@@ -31,13 +27,18 @@ function GameOver:update(dt)
 		
 	self.area:update(dt)
 	if input:pressed("exit") then
+		self.sound:fadeOut()
+		self.sound:stop()
 		love.event.quit()
+		
 	end
 	if input:pressed("restart") then
+		self.sound:fadeOut()
+		self.sound:stop()
 		love.load()
+		
 	end
-	--Following the player based on its x and y.
-	--camera:follow(self.player.x*3, self.player.y*3)	
+
 	
 end
 

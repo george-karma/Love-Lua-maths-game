@@ -60,10 +60,14 @@ function Player:update(dt)
     		local answer = tonumber(self.answer.answer)
     		if answer== enemy.equation.equation then 
     			enemy:damage(20)
+    			--move this to the enemy obj later, behaviour belongs to that obj
+    			self.area:addGameObject("TextFX",enemy.x,enemy.y,{colour = greenColour, text = "+CORRECT",direction = 7})
     			self:heal(10)
     			self.answer.answer = ""
     				self.points = self.points + enemy.equation.points
     		else
+    			--move this to the enemy obj later
+    			self.area:addGameObject("TextFX",enemy.x,enemy.y,{colour = redColour, text = "+WRONG", direction = -7})
     			self.answer.answer = ""
     			self:damage(10)
     			--only remove points if they are above 0/more than the points you are going to remove

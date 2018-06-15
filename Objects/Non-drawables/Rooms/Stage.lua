@@ -11,6 +11,9 @@ function Stage:new(opts)
 	--the self in "Area(self)" is a callback to this Stage class
 	self.area = Area(self)
 	--As I will use this system across multipme implementations, we don't want to always have a physics world atttached.
+	self.sound = mainThemeAlternate
+	mainThemeAlternate:play()
+	
 	self.area:addPhysicsWorld()
 	--adding collision classes
 	self.area.world:addCollisionClass("Player")

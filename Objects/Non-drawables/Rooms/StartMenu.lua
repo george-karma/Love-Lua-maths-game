@@ -42,7 +42,7 @@ function StartMenu:new(opts)
 												Then smash into the incoming asteroids]]
 						timer:tween(1, self, {alpha = 255}, "linear",
 						function()
-							self.text2 = "Press Enter to play"
+							self.text2 = "Press E to play"
 							timer:tween(2, self, {text2Size = 1.5}, "linear")
 						end)
 					end)
@@ -54,9 +54,10 @@ end
 
 function StartMenu:update(dt)
 	self.area:update(dt)
-	if input:pressed("restart") then
+	if input:pressed("start") then
+		
 		timer:cancel(cancelHandle)
-		timer:tween(0.75, self, {alpha = 255}, "linear", function()goToRoom("Stage") end)	
+		timer:tween(1, self, {alpha = 255}, "linear", function()goToRoom("Stage") end)	
 	end
 	--Following the player based on its x and y.
 	--camera:follow(self.player.x*3, self.player.y*3)	

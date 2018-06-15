@@ -21,7 +21,6 @@ function Equation:update(dt)
 
 	if self.asteroidObject then
 		self.x,self.y = self.asteroidObject.x,self.asteroidObject.y
-		print(self.x)
 		if self.asteroidObject.dead then
 			self.dead = true
 		end
@@ -33,7 +32,7 @@ end
 
 function Equation:draw()
 	love.graphics.setFont(defaultFont)
-	love.graphics.setColor(marineBlueColour)
+	love.graphics.setColor(defaultColour)
 	love.graphics.print(self.equationText,self.x,self.y)
 	love.graphics.setColor(defaultColour)
 end
