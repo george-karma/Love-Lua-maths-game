@@ -50,10 +50,10 @@ io.stdout:setvbuf("no")
 --Libraries
 	require "globals"
 	Class = require 'Libraries/classic-master/classic'
-	Input = require 'Libraries/boipushy-master/Input'
+	Input = require 'Libraries/boipushy-master/input'
 	Timer = require 'Libraries/chrono-master/Timer'
 	Physics = require "Libraries/windfield"
-	Camera = require "Libraries/STALKER-X-master/camera"
+	Camera = require "Libraries/STALKER-X-master/Camera"
 	Draft = require "Libraries/draft-master/draft"
 	audio = require "Libraries/wave-master/wave"
 
