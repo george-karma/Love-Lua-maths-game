@@ -2,7 +2,7 @@
 
 Simple lua maths game madde with the love2d framework, along with other community-made libraries.
 
-##How to run
+### How to run
 To run you can download the exe in the releases or you can build it yourself by going here: https://bitbucket.org/rude/love/downloads/  and dowloading Love 0.10.2, then use the command:
 ```
 "path-to-love/love.exe" "path-to-gamefolder"
