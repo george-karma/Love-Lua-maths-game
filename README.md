@@ -1,6 +1,6 @@
 # Love-Lua-maths-game
 
-Simple lua maths game madde with the love2d framework, along with other community-made libraries.
+Simple lua maths game made with the love2d framework, along with other community-made libraries. Made using Love2d 0.10.2
 
 ### How to run
 To run you can download the exe in the releases or you can build it yourself by going here: https://bitbucket.org/rude/love/downloads/  and dowloading Love 0.10.2, then use the command:
