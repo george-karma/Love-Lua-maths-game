@@ -14,6 +14,6 @@ Inspired by this wonderfull tutorial:
   https://github.com/SSYGEN/blog/
 
 ### Known issues
-Due to the library used for input  spamming keys that take you to another screen (e.g. spamming E on the start menu) will result in multiple instances of the screen beeing initiated. This further results in slowdown and audio shutter. Will fix this by researching another input library.
+Due to the library used for input  spamming keys that take you to another screen (e.g. spamming E on the start menu) will result in multiple instances of the screen beeing initiated. This further results in slowdown and audio shutter. Will fix this by researching another input  library.
 
 Hitting multiple enemies at once can sometimes result in the wrong graphics beeing displayed. 
